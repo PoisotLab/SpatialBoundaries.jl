@@ -33,7 +33,7 @@ Please use emojis, this helps visually sorting through the commits.
 | Work in progress          | `:construction:`   | :construction: new graphics                    |
 | Bug fix                   | `:bug:`            | :bug: mean fails if NA                         |
 | Code maintenance          | `:wrench:`         | :wrench: fix variable names                    |
-| New test                  | `:rotating_light:` | :rotating_light: wget JSON resource            |
+| New test                  | `:clapper:`        | :clapper: wget JSON resource                   |
 | New data                  | `:bar_chart:`      | :bar_chart: example pollination network        |
 | New feature               | `:sparkles:`       | :sparkles: (anything amazing)                  |
 | Documentation             | `:books:`          | :books: null models wrapper                    |
