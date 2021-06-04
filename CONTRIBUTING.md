@@ -27,12 +27,13 @@ Have a look at the current [Julia documentation][pkgdoc].
 ## EMOJIS!
 
 Please use emojis, this helps visually sorting through the commits (and makes for a 
-fun time). Inspiration taken from [siencegitmojis](https://github.com/MichielStock/sciencegitmojis)
+fun time). Inspiration taken from [sciencegitmojis](https://github.com/MichielStock/sciencegitmojis)
 
 | If the commit is about...                               | ...then use        | Example                                        |
 |:--------------------------------------------------------|:-------------------|:-----------------------------------------------|
 | Work in progress                                        | `:construction:`   | :construction: new output structure            |
 | Bug fix                                                 | `:bug:`            | :bug: mean fails if NA                         |
+| Fixing typos                                            | `:pencil2:`        | :pencil2: README                               |
 | Code maintenance                                        | `:wrench:`         | :wrench: fix variable names                    |
 | New test                                                | `:clapper:`        | :clapper: wget JSON resource                   |
 | Plot figures                                            | `:bar_chart:`      | :bar_chart: example boundaries                 |
