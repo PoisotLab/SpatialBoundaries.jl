@@ -26,19 +26,23 @@ Have a look at the current [Julia documentation][pkgdoc].
 
 ## EMOJIS!
 
-Please use emojis, this helps visually sorting through the commits.
+Please use emojis, this helps visually sorting through the commits (and makes for a 
+fun time). Inspiration taken from [siencegitmojis](https://github.com/MichielStock/sciencegitmojis)
 
-| If the commit is about... | ...then use        | Example                                        |
-|:--------------------------|:-------------------|:-----------------------------------------------|
-| Work in progress          | `:construction:`   | :construction: new graphics                    |
-| Bug fix                   | `:bug:`            | :bug: mean fails if NA                         |
-| Code maintenance          | `:wrench:`         | :wrench: fix variable names                    |
-| New test                  | `:clapper:`        | :clapper: wget JSON resource                   |
-| New data                  | `:bar_chart:`      | :bar_chart: example pollination network        |
-| New feature               | `:sparkles:`       | :sparkles: (anything amazing)                  |
-| Documentation             | `:books:`          | :books: null models wrapper                    |
-| Performance improvement   | `:racehorse:`      | :racehorse: parallelizes null model by default |
-| Upcoming release          | `:package:`        | :package: v1.0.2                               |
+| If the commit is about...                               | ...then use        | Example                                        |
+|:--------------------------------------------------------|:-------------------|:-----------------------------------------------|
+| Work in progress                                        | `:construction:`   | :construction: new output structure            |
+| Bug fix                                                 | `:bug:`            | :bug: mean fails if NA                         |
+| Code maintenance                                        | `:wrench:`         | :wrench: fix variable names                    |
+| New test                                                | `:clapper:`        | :clapper: wget JSON resource                   |
+| Plot figures                                            | `:bar_chart:`      | :bar_chart: example boundaries                 |
+| New data                                                | `:cd:`             | :cd: example pollination network               |
+| New feature                                             | `:sparkles:`       | :sparkles: (insert achievement)                |
+| Documentation                                           | `:books:`          | :books: lattice function                       |
+| Performance improvement                                 | `:racehorse:`      | :racehorse: parallelizes models by default     |
+| Upcoming release                                        | `:package:`        | :package: v1.0.6                               |
+| Ugly but working code                                   | `:dragon:`         | :dragon: added lattice function                |
+| Working on code that doesn't work but I want to go home | `:neutral_face:`   | :neutral_face: for triangulation               |
 
 ## Workflow
 
