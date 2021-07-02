@@ -1,2 +1,10 @@
+name = "SpatialBoundaries"
+uuid = "8d2ba62a-3d23-4a2b-b692-6b63e9267be2"
+authors = ["Tanya Strydom <tanya.strydom@umontreal.ca>", "Timothée Poisot <timothee.poisot@umontreal.ca>"]
+version = "0.0.1"
+
 [deps]
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[compat]
+julia = "1.6"
