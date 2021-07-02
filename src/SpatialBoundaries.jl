@@ -1,4 +1,4 @@
-module SimpleSDMLayers
+module SpatialBoundaries
 
 # Dependencies
 # using ...
