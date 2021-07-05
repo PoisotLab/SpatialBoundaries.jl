@@ -3,7 +3,7 @@ name: To-do
 about: Short notes on development tasks
 title: ''
 labels: need-triage, to do
-assignees: 'tpoisot', 'gabrieldansereau'
+assignees: 'tpoisot', 'TanyaS08'
 ---
 
 **What to do?**   

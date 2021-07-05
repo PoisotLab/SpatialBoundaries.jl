@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: bug, need-triage
-assignees: 'tpoisot', 'gabrieldansereau'
+assignees: 'tpoisot', 'TanyaS08'
 ---
 
 **Describe the bug**   

@@ -3,7 +3,7 @@ name: Feature request
 about: Suggest an idea for this project
 title: ''
 labels: enhancement, need-triage
-assignees: 'tpoisot', 'gabrieldansereau'
+assignees: 'tpoisot', 'TanyaS08'
 ---
 
 **Is your feature request related to a problem? Please describe.**   
