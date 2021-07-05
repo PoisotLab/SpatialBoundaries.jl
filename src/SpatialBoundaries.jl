@@ -13,5 +13,8 @@ using SpatialEcology
 using Statistics
 using StatsPlots
 
+# Load and export types and function
+include(joinpath("lib", "rateofchange.jl"))
+# export Whatever
 
 end
