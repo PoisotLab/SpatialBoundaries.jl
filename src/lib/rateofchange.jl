@@ -1,12 +1,12 @@
 """
-    _rate_gradient(∂X, ∂Y)
+    _rategradient(∂X, ∂Y)
 
 Returns the rate of change in units of the values stored in the grid, and the
 angle of the change in wind direction, *i.e.* an angle of 180 means that the
 value is increasing *from* the south. When both ∂X and ∂Y are equal to 0, the
 angle is assumed to be 0.
 """
-function _rate_gradient(∂X::T, ∂Y::T) where {T<:Number}
+function _rategradient(∂X::T, ∂Y::T) where {T<:Number}
     if ∂X == ∂Y == 0.0
         return (0.0, 0.0)
     end
@@ -18,13 +18,13 @@ function _rate_gradient(∂X::T, ∂Y::T) where {T<:Number}
 end
 
 """
-    _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector)
+    _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector{T})
 
 Rate of change for a series of three points, defined as a series of `x` and `y`
 coordinates and a value `z`. Returns a rate of change (in units of `z`) and a
 gradient in degrees.
 """
-function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector) where {T<:Number}
+function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
 
     # Check that all three vectors have the same length
     length(x) == length(y) || throw(DimensionMismatch("x and y must have the same length"))
@@ -41,7 +41,7 @@ function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector) where {T<:Number}
     ∂Y = coeff[1] * X + coeff[3]
 
     # Rate of change and direction
-    return _rate_gradient(∂X, ∂Y)
+    return _rategradient(∂X, ∂Y)
 end
 
 """
@@ -60,5 +60,5 @@ function _rateofchange(A::Matrix{T}; X=0.5, Y=0.5) where {T<:Number}
     ∂Y = Z₄ - Z₁ + X*(Z₁ - Z₂ + Z₃ - Z₄)
 
     # Rate of change and direction
-    return _rate_gradient(∂X, ∂Y)
+    return _rategradient(∂X, ∂Y)
 end
