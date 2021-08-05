@@ -31,3 +31,23 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     # Rate of change and direction
     return (M = _M, Θ = _Θ, x = _X, y = _Y)
 end
+
+"""
+    wombling(A::Matrix{T}) where {T<:Number}
+
+Wrapper function that implements the lattice wombling algorithm for points
+that are regularly arranged in space.
+"""
+function wombling(A::Matrix{T}) where {T<:Number}
+    
+    _𝑀 = convert(Matrix{Union{Float32}}, zeros(Float32, size(A) .- 1)) #empty matrix to fill
+    _Θ = copy(_M)
+
+    for j in 1:size(_M, 2), i in 1:size(_M, 1) #womble along a 2x2 window
+        tmp = A[i:(i + 1), j:(j + 1)]
+            _𝑀[i, j], _Θ[i, j] = _rateofchange(tmp)
+    end
+
+    # Rate of change and direction
+    return DataFrame(𝑀 = _𝑀, Θ = _Θ)
+end
