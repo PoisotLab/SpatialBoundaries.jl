@@ -49,5 +49,5 @@ function wombling(A::Matrix{T}) where {T<:Number}
     end
 
     # Rate of change and direction
-    return DataFrame(𝑀 = _𝑀, Θ = _Θ)
+    return (M = _M, Θ = _Θ)
 end
