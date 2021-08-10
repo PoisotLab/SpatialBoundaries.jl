@@ -1,8 +1,3 @@
-function StatsBase.denserank(tw::T; kw...) where {T <: TriangulationWomble}
-    return StatsBase.denserank(tw.m; kw...)
-end
-
-
 """
     boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T <: Number}
 

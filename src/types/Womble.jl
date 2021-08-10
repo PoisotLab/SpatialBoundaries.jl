@@ -13,3 +13,7 @@ mutable struct LatticeWomble{T <: Number} <: Womble
     x::Vector{T}
     y::Vector{T}
 end
+
+function StatsBase.denserank(tw::T; kw...) where {T <: TriangulationWomble}
+    return StatsBase.denserank(tw.m; kw...)
+end
