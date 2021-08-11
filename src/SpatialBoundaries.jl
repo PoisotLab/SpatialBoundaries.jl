@@ -5,6 +5,7 @@ import Delaunay
 using LinearAlgebra
 using Statistics
 using StatsBase
+using Requires
 
 include(joinpath("types", "Womble.jl"))
 include(joinpath("types", "overloads.jl"))
@@ -17,5 +18,9 @@ export wombling
 
 include(joinpath("lib", "boundaries.jl"))
 export boundaries
+
+function __init__()
+    @require SimpleSDMLayers="2c645270-77db-11e9-22c3-0f302a89c64c" include(joinpath("extensions", "SimpleSDMLayers.jl"))
+end
 
 end
