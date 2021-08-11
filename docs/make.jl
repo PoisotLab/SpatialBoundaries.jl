@@ -5,7 +5,7 @@ using Literate
 # Generate the vignettes using Literate
 vignettes_dir = joinpath("docs", "src", "vignettes")
 for vignette in readdir(vignettes_dir)
-    Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir)
+    Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir; credit=false)
 end
 
 makedocs(
@@ -15,7 +15,7 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Vignettes" => [
-            "Linear gradient" => "vignettes/lineargradient.md"
+            "Introduction" => "vignettes/introduction.md"
         ]
     ]
 )
