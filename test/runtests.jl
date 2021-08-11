@@ -7,7 +7,7 @@ tests = [
 
 for test in tests
    try
-      include(joinpath("units", test.second)
+      include(joinpath("units", test.second))
       println("\033[1m\033[32m✓\033[0m\t$(test.first)")
    catch e
       global anyerrors = true
