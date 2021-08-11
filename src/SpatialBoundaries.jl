@@ -7,6 +7,7 @@ using Statistics
 using StatsBase
 
 include(joinpath("types", "Womble.jl"))
+include(joinpath("types", "overloads.jl"))
 export Womble, TriangulationWomble, LatticeWomble
 
 include(joinpath("lib", "rateofchange.jl"))
