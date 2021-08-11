@@ -1,13 +1,15 @@
+using SimpleSDMLayers
+
 function wombling(layer::T; convert_to::Type=Float64) where {T <: SimpleSDMLayer}
     try
-        nan = convert(NaN, convert_to)
+        global nan = convert(convert_to, NaN)
     catch e
         throw(ArgumentError("The type given as `convert_to` must have a `NaN` value."))
     end
 
     # Get the values for x and y
-    x = collect(longitudes(layer))
-    y = collect(latitudes(layer))
+    y = collect(longitudes(layer))
+    x = collect(latitudes(layer))
 
     # Get the grid
     z = convert(Matrix{Union{Nothing,convert_to}}, layer.grid)
