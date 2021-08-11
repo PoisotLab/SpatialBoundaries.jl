@@ -1,10 +1,8 @@
-using SimpleSDMLayers
-using Test
-
 global anyerrors = false
 
 tests = [
    "all good" => "00_allgood.jl"
+   "linear gradient" => "01_gradient.jl"
 ]
 
 for test in tests
