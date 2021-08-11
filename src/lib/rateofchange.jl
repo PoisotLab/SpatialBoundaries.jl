@@ -6,14 +6,14 @@ angle of the change in wind direction, *i.e.* an angle of 180 means that the
 value is increasing *from* the south. When both ∂X and ∂Y are equal to 0, the
 angle is assumed to be 0.
 """
-function _rategradient(∂X::T, ∂Y::T) where {T<:Number}
+function _rategradient(∂X::T, ∂Y::T) where {T <: Number}
     if ∂X == ∂Y == 0.0
         return (0.0, 0.0)
     end
     m = sqrt(∂X^2 + ∂Y^2)
     Δ = ∂X >= 0.0 ? 0.0 : 180.0
     θ = rad2deg(atan(∂X, ∂Y)) + Δ
-    θ = ∂X > 0.0 ? θ+180.0 : θ
+    θ = ∂X > 0.0 ? θ + 180.0 : θ
     return (m, θ)
 end
 
@@ -24,7 +24,7 @@ Rate of change for a series of three points, defined as a series of `x` and `y`
 coordinates and a value `z`. Returns a rate of change (in units of `z`) and a
 gradient in degrees.
 """
-function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
+function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T <: Number}
 
     # Check that all three vectors have the same length
     length(x) == length(y) || throw(DimensionMismatch("x and y must have the same length"))
@@ -50,15 +50,21 @@ end
 Rate of change for a series of a lattice points. Returns the rate of change and 
 the gradient for a 2x2 grid of numbers.
 """
-function _rateofchange(A::Matrix{T}; X=0.5, Y=0.5) where {T<:Number}
-    size(A) == (2, 2) || throw(DimensionMismatch("the matrix A must have size (2,2)"))
+function _rateofchange(x::Vector{T}, y::Vector{T}, z::Matrix{T};) where {T <: Number}
+    size(z) == (2, 2) || throw(DimensionMismatch("the matrix z must have size (2,2)"))
+
+    # The values in x and y should be sorted, but we'll still enforce it
+    Δx = abs(first(diff(x)))
+    Δy = abs(first(diff(y)))
 
     # We can get the values directly from the matrix
-    Z₄, Z₁, Z₃, Z₂ = A
+    Z₄, Z₁, Z₃, Z₂ = z
 
-    ∂X = Z₂ - Z₁ + Y*(Z₁ - Z₂ + Z₃ - Z₄)
-    ∂Y = Z₄ - Z₁ + X*(Z₁ - Z₂ + Z₃ - Z₄)
+    ∂X = Z₂ - Z₁ + Δy * (Z₁ - Z₂ + Z₃ - Z₄)
+    ∂Y = Z₄ - Z₁ + Δx * (Z₁ - Z₂ + Z₃ - Z₄)
 
     # Rate of change and direction
     return _rategradient(∂X, ∂Y)
 end
+
+_rateofchange(z::Matrix{T}) where {T <: Number} = _rateofchange(one(T) / 2, one(T) / 2, z)
