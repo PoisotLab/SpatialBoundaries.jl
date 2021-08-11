@@ -4,11 +4,13 @@
 Wrapper function that implements the triangulation wombling algorithm for points
 that are irregularly arranged in space.
 """
-function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
-    
-    length(x) >= 3  || throw(DimensionMismatch("x must have a minimum length of 3"))
-    length(x) == length(y) || throw(DimensionMismatch("x and y must have the same dimension"))
-    length(x) == length(z) || throw(DimensionMismatch("x and z must have the same dimension"))
+function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T <: Number}
+
+    length(x) >= 3 || throw(DimensionMismatch("x must have a minimum length of 3"))
+    length(x) == length(y) ||
+        throw(DimensionMismatch("x and y must have the same dimension"))
+    length(x) == length(z) ||
+        throw(DimensionMismatch("x and z must have the same dimension"))
 
     # Do Delaunay thingie for sites
     mesh = Delaunay.delaunay(hcat(x, y))
@@ -33,21 +35,34 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
 end
 
 """
-    wombling(A::Matrix{T}) where {T<:Number}
+    wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
 
 Wrapper function that implements the lattice wombling algorithm for points
 that are regularly arranged in space.
 """
-function wombling(A::Matrix{T}) where {T<:Number}
-    
-    _𝑀 = convert(Matrix{Union{Float32}}, zeros(Float32, size(A) .- 1)) #empty matrix to fill
-    _Θ = copy(_M)
+function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T <: Number}
 
-    for j in 1:size(_M, 2), i in 1:size(_M, 1) #womble along a 2x2 window
-        tmp = A[i:(i + 1), j:(j + 1)]
-            _𝑀[i, j], _Θ[i, j] = _rateofchange(tmp)
+    issorted(x) || throw(ArgumentError("The values of x must be sorted and increasing"))
+    issorted(y) || throw(ArgumentError("The values of y must be sorted and increasing"))
+    length(x) == size(z, 1) || throw(DimensionMismatch("The length of x must be equal to the first dimension of z"))
+    length(y) == size(z, 2) || throw(DimensionMismatch("The length of y must be equal to the second dimension of z"))
+
+    _M = zeros(T, size(z) .- 1)
+    _θ = similar(_M)
+
+    for j in 1:size(_M, 2), i in 1:size(_M, 1) # womble along a 2x2 window
+        tmp = z[i:(i + 1), j:(j + 1)]
+        _M[i, j], _θ[i, j] = SpatialBoundaries._rateofchange(x[i:(i + 1)], y[j:(j + 1)], tmp)
     end
 
     # Rate of change and direction
-    return (M = _M, Θ = _Θ)
+    return LatticeWomble(_M, _θ, vec(x[2:end].-x[1:(end-1)]), vec(y[2:end].-y[1:(end-1)]))
 end
+
+"""
+    wombling(W::T) where {T <: Womble}
+
+Wombling applied to an already wombled structure - this is a nifty shortcut to
+get the second partial derivatives.
+"""
+wombling(W::T) where {T <: Womble} = wombling(W.x, W.y, W.m)
