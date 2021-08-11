@@ -1,2 +1,5 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
+NeutralLandscapes = "71847384-8354-4223-ac08-659a5128069f"
+StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
