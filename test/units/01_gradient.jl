@@ -11,7 +11,7 @@ module SBTestGradient
     W = wombling(x, y, landscape)
     @test isa(W, LatticeWomble)
     @test size(W.m) == size(landscape) .- 1
-    @test size(W.x) == length(x) - 1
-    @test size(W.y) == length(y) - 1
+    @test length(W.x) == length(x) - 1
+    @test length(W.y) == length(y) - 1
 
 end
