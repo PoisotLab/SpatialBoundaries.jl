@@ -1,19 +1,36 @@
 """
-    Boundaries(𝑀::Matrix{Union{Nothing, Float32}}; threshold::Float32=0.1)
+    boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T <: Number}
 
-Extracts candidate boundaries using calculated rates of change (𝑀) on specified 
-threshold. Default threshold is 10%.
+Extracts candidate boundaries using calculated rates of change (M) on specified
+threshold. Default threshold is 10%, meaning that the top 10% of pixels are
+selected as part of the boundaries.
 """
-function Boundaries(𝑀::Matrix{Union{Nothing, Float32}}; threshold=0.1)
+function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Number}
+    limit = floor(Int, length(W.m) * threshold)
 
-    𝑀 = 𝑀
-    thresh = threshold
-    rank = floor(Int, size(𝑀, 2)*size(𝑀, 1)*thresh)
-    𝑀_n = denserank(replace(𝑀 , nothing => missing), #need to use type::missing
-                    rev=true) # ranks largest to smallest
+    changerank = findall(denserank(W; rev=true) .<= limit)
 
-    replace!(x -> isless(x, rank) ? 1 : missing, 𝑀_n) # assigns all in above threshold to 1
+    candidate_boundaries = hcat(W.x[changerank], W.y[changerank], W.m[changerank])
 
-    # Rate of change and direction
-    return replace(𝑀_n , missing => nothing) #back to type::nothing to play with SDMSimple
+    return candidate_boundaries
+end
+
+"""
+    boundaries(M::Matrix{Union{Nothing, Float32}}; threshold::Float32=0.1)
+
+Extracts candidate boundaries using calculated rates of change (M) on specified
+threshold. Default threshold is 10%, meaning that the top 10% of pixels are
+selected as part of the boundaries.
+"""
+function boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
+    limit = floor(Int, size(W.m, 2) * size(W.m, 1) * threshold)
+    changerank = findall(denserank(W; rev=true) .<= limit)
+
+    z_values = W.m[changerank]
+    x_values = [W.x[r.I[1]] for r in changerank]
+    y_values = [W.y[r.I[2]] for r in changerank]
+
+    candidate_boundaries = hcat(x_values, y_values, z_values)
+
+    return candidate_boundaries
 end
