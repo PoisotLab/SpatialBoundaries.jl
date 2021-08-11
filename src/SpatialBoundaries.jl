@@ -1,19 +1,21 @@
 module SpatialBoundaries
 
 # Dependencies
-
-using CSV: CSV
-using DataFrames
-using Delaunay
+import Delaunay
 using LinearAlgebra
 using Statistics
+using StatsBase
 
-# Load and export types and function
-include(joinpath("lib", "rateofchange.jl")) # internal functions
+include(joinpath("types", "Womble.jl"))
+include(joinpath("types", "overloads.jl"))
+export Womble, TriangulationWomble, LatticeWomble
 
-include(joinpath("lib", "wombling.jl")) # will prob export this function
+include(joinpath("lib", "rateofchange.jl"))
 
-include(joinpath("lib", "boundaries.jl")) #will prob export this function
-# export Whatever
+include(joinpath("lib", "wombling.jl"))
+export wombling
+
+include(joinpath("lib", "boundaries.jl"))
+export boundaries
 
 end

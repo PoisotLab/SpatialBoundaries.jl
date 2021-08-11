@@ -1,15 +1,28 @@
 using Documenter
 using SpatialBoundaries
+using Literate
+
+# Generate the vignettes using Literate
+vignettes_dir = joinpath("docs", "src", "vignettes")
+for vignette in readdir(vignettes_dir)
+    Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir)
+end
 
 makedocs(
     sitename = "SpatialBoundaries",
     format = Documenter.HTML(),
-    modules = [SpatialBoundaries]
+    modules = [SpatialBoundaries],
+    pages = [
+        "Home" => "index.md",
+        "Vignettes" => [
+            "Linear gradient" => "vignettes/lineargradient.md"
+        ]
+    ]
 )
 
-# Documenter can also automatically deploy documentation to gh-pages.
-# See "Hosting Documentation" and deploydocs() in the Documenter manual
-# for more information.
-#=deploydocs(
-    repo = "<repository url>"
-)=#
+deploydocs(
+    deps=Deps.pip("pygments", "python-markdown-math"),
+    repo="github.com/EcoJulia/SpatialBoundaries.jl.git",
+    devbranch="main",
+    push_preview=true
+)

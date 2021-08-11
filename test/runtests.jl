@@ -1,31 +1,13 @@
-using SimpleSDMLayers
-using Test
-
 global anyerrors = false
 
 tests = [
-   "all good" => "00_allgood.jl",
-   "basics" => "basics.jl",
-   "matching" => "matching.jl",
-   "overloads" => "overloads.jl",
-   "ascii" => "ascii.jl",
-   "iteration" => "iteration.jl",
-   "rescale" => "rescale.jl",
-   "mosaic" => "mosaic.jl",
-   "generated" => "generated.jl",
-   "import" => "dataread.jl",
-   "worldclim" => "worldclim.jl",
-   "earthenv" => "earthenv.jl",
-   "chelsa" => "chelsa.jl",
-   "coarsen" => "coarsen.jl",
-   "plotting" => "plots.jl",
-   "GBIF" => "gbif.jl",
-   "DataFrames" => "dataframes.jl"
+   "all good" => "00_allgood.jl"
+   "linear gradient" => "01_gradient.jl"
 ]
 
 for test in tests
    try
-      include(joinpath("units", test.second)
+      include(joinpath("units", test.second))
       println("\033[1m\033[32m✓\033[0m\t$(test.first)")
    catch e
       global anyerrors = true
