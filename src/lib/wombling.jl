@@ -4,8 +4,7 @@
 Wrapper function that implements the triangulation wombling algorithm for points
 that are irregularly arranged in space.
 """
-function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T <: Number}
-
+function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     length(x) >= 3 || throw(DimensionMismatch("x must have a minimum length of 3"))
     length(x) == length(y) ||
         throw(DimensionMismatch("x and y must have the same dimension"))
@@ -40,23 +39,33 @@ end
 Wrapper function that implements the lattice wombling algorithm for points
 that are regularly arranged in space.
 """
-function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T <: Number}
-
+function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
     issorted(x) || throw(ArgumentError("The values of x must be sorted and increasing"))
     issorted(y) || throw(ArgumentError("The values of y must be sorted and increasing"))
-    length(x) == size(z, 1) || throw(DimensionMismatch("The length of x must be equal to the first dimension of z"))
-    length(y) == size(z, 2) || throw(DimensionMismatch("The length of y must be equal to the second dimension of z"))
+    length(x) == size(z, 1) || throw(
+        DimensionMismatch("The length of x must be equal to the first dimension of z")
+    )
+    length(y) == size(z, 2) || throw(
+        DimensionMismatch("The length of y must be equal to the second dimension of z")
+    )
 
     _M = zeros(T, size(z) .- 1)
     _θ = similar(_M)
 
     for j in 1:size(_M, 2), i in 1:size(_M, 1) # womble along a 2x2 window
         tmp = z[i:(i + 1), j:(j + 1)]
-        _M[i, j], _θ[i, j] = SpatialBoundaries._rateofchange(x[i:(i + 1)], y[j:(j + 1)], tmp)
+        _M[i, j], _θ[i, j] = SpatialBoundaries._rateofchange(
+            x[i:(i + 1)], y[j:(j + 1)], tmp
+        )
     end
 
     # Rate of change and direction
-    return LatticeWomble(_M, _θ, vec(x[2:end].-x[1:(end-1)]), vec(y[2:end].-y[1:(end-1)]))
+    return LatticeWomble(
+        _M,
+        _θ,
+        x[1:(end - 1)] .+ 0.5 .* vec(x[2:end] .- x[1:(end - 1)]),
+        y[1:(end - 1)] .+ 0.5 .* vec(y[2:end] .- y[1:(end - 1)]),
+    )
 end
 
 """
@@ -65,4 +74,6 @@ end
 Wombling applied to an already wombled structure - this is a nifty shortcut to
 get the second partial derivatives.
 """
-wombling(W::T) where {T <: Womble} = wombling(W.x, W.y, W.m)
+wombling(W::T) where {T<:Womble} = wombling(W.x, W.y, W.m)
+
+wombling(m::Matrix{T}) where {T<:Number} = wombling(collect(LinRange(0.0, 1.0, size(m,1))), collect(LinRange(0.0, 1.0, size(m,2))), m)

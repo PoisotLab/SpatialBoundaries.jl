@@ -11,7 +11,6 @@ function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Numbe
     changerank = findall(denserank(W; rev=true) .<= limit)
 
     candidate_boundaries = hcat(W.x[changerank], W.y[changerank], W.m[changerank])
-    sort!(candidate_boundaries; dims=1, by=last, rev=true)
 
     return candidate_boundaries
 end
@@ -24,7 +23,14 @@ threshold. Default threshold is 10%, meaning that the top 10% of pixels are
 selected as part of the boundaries.
 """
 function boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
-    limit = floor(Int, size(M, 2) * size(M, 1) * threshold)
+    limit = floor(Int, size(W.m, 2) * size(W.m, 1) * threshold)
     changerank = findall(denserank(W; rev=true) .<= limit)
-    return M_n .< limit
+
+    z_values = W.m[changerank]
+    x_values = [W.x[r.I[1]] for r in changerank]
+    y_values = [W.y[r.I[2]] for r in changerank]
+
+    candidate_boundaries = hcat(x_values, y_values, z_values)
+
+    return candidate_boundaries
 end
