@@ -5,7 +5,7 @@ using Literate
 # Generate the vignettes using Literate
 vignettes_dir = joinpath("src", "vignettes")
 for vignette in readdir(vignettes_dir)
-    Literate.markdown(joinpath(vignettes_dir, vignettes_dir), vignettes_dir)
+    Literate.markdown(joinpath(vignettes_dir, vignettes), vignettes_dir)
 end
 
 makedocs(
