@@ -3,7 +3,7 @@ using SpatialBoundaries
 using Literate
 
 # Generate the vignettes using Literate
-vignettes_dir = joinpath("src", "vignettes")
+vignettes_dir = joinpath("docs", "src", "vignettes")
 for vignette in readdir(vignettes_dir)
     Literate.markdown(joinpath(vignettes_dir, vignettes), vignettes_dir)
 end
