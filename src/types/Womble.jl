@@ -1,5 +1,10 @@
 abstract type Womble end
 
+"""
+    TriangulationWomble{T <: Number} <: Womble
+
+Docstring test (learning)
+"""
 mutable struct TriangulationWomble{T <: Number} <: Womble
     m::Vector{T}
     θ::Vector{T}
