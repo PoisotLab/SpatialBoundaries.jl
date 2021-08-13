@@ -25,7 +25,7 @@ W = wombling(precipitation)
 # By default, this returns a `LatticeWomble`. Let's look at the direction of
 # change -- mapping this information is difficult, so we will focus on the 
 
-histogram(vec(W.θ), nbins=36, proj=:polar, yflip = true)
+stephist(vec(W.θ), proj=:polar, lab="", c=:black, fill=(0, 0.3, :black))
 
 # We can also map the rate of change. This is far easier to do with a proper SDM
 # layer, so we will convert the wombling output:
