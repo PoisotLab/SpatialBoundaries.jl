@@ -13,25 +13,25 @@ using StatsPlots
 # functionalities for `SimpleSDMLayers` as part of `SpatialBoundaries`, and can
 # safely be ignored.
 
-# In this example, we will look at precipitation data over Noth America, and
+# In this example, we will look at temperature data over Noth America, and
 # measure the rate of change, as well as the direction of it. These data are
 # extracted from the WorldClim database.
 
-precipitation = SimpleSDMPredictor(
-    WorldClim, BioClim, 12; left=-130.0, right=-65.0, bottom=5.0, top=65.0
+temperature = SimpleSDMPredictor(
+    WorldClim, BioClim, 1; left=-130.0, right=-65.0, bottom=5.0, top=65.0
 )
 
 # We can have a look at this layer, after setting a few defaults:
 
 default(; dpi=500, size=(600, 600), aspectratio=1, c=:davos, frame=:box)
-plot(precipitation)
+plot(temperature)
 
 # There is an overload of the `wombling` method for SDM layers, so we can call
 # it directly -- this method might result in a bit more memory usage than
 # expected, as it requires to transform the `nothing` values into `NaN`s, which
 # in turn might require to convert the inner elements of the layer grid.
 
-W = wombling(precipitation)
+W = wombling(temperature)
 
 # By default, this returns a `LatticeWomble`. Let's look at the direction of
 # change -- mapping this information is difficult, so we will focus on the 
