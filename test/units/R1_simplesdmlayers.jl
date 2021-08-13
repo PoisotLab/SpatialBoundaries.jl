@@ -10,4 +10,10 @@ W = wombling(precipitation)
 
 @test isa(W, LatticeWomble)
 
+L = SimpleSDMPredictor(W)
+@test isa(L, SimpleSDMPredictor)
+
+R = SimpleSDMResponse(W)
+@test isa(R, SimpleSDMResponse)
+
 end
