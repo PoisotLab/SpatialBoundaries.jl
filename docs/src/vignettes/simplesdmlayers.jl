@@ -25,8 +25,16 @@ W = wombling(precipitation)
 # By default, this returns a `LatticeWomble`. Let's look at the direction of
 # change -- mapping this information is difficult, so we will focus on the 
 
-stephist(W.θ, nbins=36, proj=:polar, yflip = true)
+stephist(vec(W.θ), nbins=36, proj=:polar, yflip = true)
 
-# We can also map the rate of change:
+# We can also map the rate of change. This is far easier to do with a proper SDM
+# layer, so we will convert the wombling output:
 
-heatmap(W.m)
+Lr, Ld = SimpleSDMPredictor(W)
+
+# Note that we do not use `convert` here, because this call returns *two* layers
+# in a tuple -- this is a slight deviation from what we expect with
+# `SimpleSDMLayers`, but it makes the code a little easier to write, and so is
+# considered an acceptable trade-off.
+
+plot(Lr, c=:lapaz)
