@@ -16,7 +16,7 @@ function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Numbe
 end
 
 """
-    boundaries(M::Matrix{Union{Nothing, Float32}}; threshold::Float32=0.1)
+    boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
 
 Extracts candidate boundaries using calculated rates of change (M) on specified
 threshold. Default threshold is 10%, meaning that the top 10% of pixels are
