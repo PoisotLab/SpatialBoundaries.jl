@@ -47,7 +47,7 @@ stephist(
 
 # The values for the direction of change are concentrated around 180° - note
 # that the direction of change is reported as a wind direction, meaning that
-# values tend to increase *from* the south *towards* the north.
+# values tend to increase on a south-north axis.
 
 # We can also map the rate of change. This is far easier to do with a proper SDM
 # layer, so we will convert the wombling output:
@@ -60,8 +60,3 @@ Lr, Ld = SimpleSDMPredictor(W)
 # considered an acceptable trade-off.
 
 plot(Lr)
-
-# We can finally have a look at the relationship between rate of change and
-# direction of change:
-
-scatter(deg2rad.(vec(W.θ)), vec(W.m); proj=:polar, legend=false)
