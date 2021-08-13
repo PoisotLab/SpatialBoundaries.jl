@@ -13,12 +13,12 @@ using StatsPlots
 # functionalities for `SimpleSDMLayers` as part of `SpatialBoundaries`, and can
 # safely be ignored.
 
-# In this example, we will look at precipitation data over the province
-# colonially refered to as Québec, and measure the rate of change, as well as
-# the direction of it. These data are extracted from the WorldClim database.
+# In this example, we will look at precipitation data over Noth America, and
+# measure the rate of change, as well as the direction of it. These data are
+# extracted from the WorldClim database.
 
 precipitation = SimpleSDMPredictor(
-    WorldClim, BioClim, 12; left=-80.0, right=-56.0, bottom=44.0, top=62.0
+    WorldClim, BioClim, 12; left=-130.0, right=-65.0, bottom=5.0, top=65.0
 )
 
 # We can have a look at this layer, after setting a few defaults:
