@@ -64,4 +64,4 @@ plot(Lr)
 # We can finally have a look at the relationship between rate of change and
 # direction of change:
 
-scatter(deg2rad.(vec(W.θ)), vec(W.m); proj=:polar, zcolor=W.m, legend=false)
+scatter(deg2rad.(vec(W.θ)), vec(W.m); proj=:polar, legend=false)
