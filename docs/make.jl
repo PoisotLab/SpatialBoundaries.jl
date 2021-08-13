@@ -15,7 +15,8 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Vignettes" => [
-            "Introduction" => "vignettes/introduction.md"
+            "Introduction" => "vignettes/introduction.md",
+            "SDM Layers" => "vignettes/simplesdmlayers.md"
         ]
     ]
 )

@@ -14,4 +14,5 @@ boundaries
 ```@docs
 LatticeWomble
 TriangulationWomble
+Womble
 ```
