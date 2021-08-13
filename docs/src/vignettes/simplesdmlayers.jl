@@ -9,7 +9,7 @@ using SimpleSDMLayers
 using SpatialBoundaries
 using StatsPlots
 
-# In this example, we will look at precipitation data over the province of
+# In this example, we will look at precipitation data over the province
 # colonially refered to as Québec, and measure the rate of change, as well as
 # the direction of it. These data are extracted from the WorldClim database.
 
