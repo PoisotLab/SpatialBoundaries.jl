@@ -17,10 +17,10 @@ function wombling(layer::T; convert_to::Type=Float64) where {T <: SimpleSDMLayer
     return wombling(x, y, convert(Matrix{convert_to}, z))
 end
 
-function SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
-    rate = SimpleSDMLayers.SimpleSDMPredictor(W.y, W.x, W.m)
-    direction = SimpleSDMLayers.SimpleSDMPredictor(W.y, W.x, W.θ)
+function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
+    rate = SimpleSDMLayers.SimpleSDMPredictor(W.m, extrema(W.y)..., extrema(W.x)...)
+    direction = SimpleSDMLayers.SimpleSDMPredictor(W.θ, extrema(W.y)..., extrema(W.x)...)
     return (rate, direction)
 end
 
-SimpleSDMResponse(W::T) where {T <: LatticeWomble} = convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
+SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble} = convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
