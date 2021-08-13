@@ -60,3 +60,11 @@ Lr, Ld = SimpleSDMPredictor(W)
 # considered an acceptable trade-off.
 
 plot(Lr)
+
+# With the `Ld` layer storing the direction of change, we *can* do a map - the
+# main issue with mapping directions is colors, which need to have the same
+# begin and endpoint, while remaining accessible to people with color vision
+# defficiencies. Currently, the best palette for this purpose seems to be
+# `:twilight`:
+
+plot(Ld, c=:twilight, clim=(0, 360))
