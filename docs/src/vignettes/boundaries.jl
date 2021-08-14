@@ -36,8 +36,8 @@ thresholds = LinRange(0.0, 0.2, 200)
 patches = [length(boundaries(W; threshold=t)) for t in thresholds]
 
 plot(thresholds, log1p.(patches))
-xaxis!("Threshold")
-yaxis!("log(boundary patches + 1)")
+xaxis!("Threshold", (0., 0.2))
+yaxis!("log(boundary patches + 1)", (0., 9.))
 
 # Let's eyeball this as a 0.01, and see how the patches are distributed:
 
