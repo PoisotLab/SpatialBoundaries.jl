@@ -7,12 +7,8 @@ selected as part of the boundaries.
 """
 function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Number}
     limit = floor(Int, length(W.m) * threshold)
-
     changerank = findall(denserank(W; rev=true) .<= limit)
-
-    candidate_boundaries = hcat(W.x[changerank], W.y[changerank], W.m[changerank])
-
-    return candidate_boundaries
+    return changerank
 end
 
 """
@@ -25,12 +21,5 @@ selected as part of the boundaries.
 function boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
     limit = floor(Int, size(W.m, 2) * size(W.m, 1) * threshold)
     changerank = findall(denserank(W; rev=true) .<= limit)
-
-    z_values = W.m[changerank]
-    x_values = [W.x[r.I[1]] for r in changerank]
-    y_values = [W.y[r.I[2]] for r in changerank]
-
-    candidate_boundaries = hcat(x_values, y_values, z_values)
-
-    return candidate_boundaries
+    return changerank
 end
