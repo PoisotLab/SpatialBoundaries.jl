@@ -39,7 +39,23 @@ plot(thresholds, log1p.(patches))
 xaxis!("Threshold", (0., 0.2))
 yaxis!("log(boundary patches + 1)", (0., 9.))
 
-# Let's eyeball this as a 0.01, and see how the patches are distributed:
+# Let's eyeball this as a 0.01, and see how the patches are distributed.
+
+# Another way we can look at the boundaries is to see *when* a patch is
+# considered to be a boundary. To do so we will create an empty matrix, and fill
+# each position with the lowest threshold at which it is considered to be a
+# boundary:
+
+b = similar(W.m)
+
+for t in reverse(LinRange(0.0, 1.0, 200))
+    b[boundaries(W; threshold=t)] .= t
+end
+
+heatmap(b, c=:tofino, clim=(0,1))
+
+# This also suggests that we will get well delineated patches for low values of
+# the threshold.
 
 B = boundaries(W; threshold=0.01);
 
