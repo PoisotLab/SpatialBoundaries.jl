@@ -10,9 +10,10 @@ W = wombling(A)
 B = boundaries(W)
 @test length(B) == prod(size(A).-1)
 
-A[4, 8] = 2.0
+A[4, 8] = 5.0
+A[5, 8] = 5.0
 W = wombling(A)
-B = boundaries(W; threshold=0.05)
-@test length(B) == 4
+B = boundaries(W; threshold=0.03)
+@test length(B) == 5
 
 end
