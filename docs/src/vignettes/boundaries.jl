@@ -35,7 +35,7 @@ heatmap(W.m; c=:nuuk)
 thresholds = LinRange(0.0, 0.2, 200)
 patches = [length(boundaries(W; threshold=t)) for t in thresholds]
 
-plot(thresholds, log1p.(patches))
+plot(thresholds, log1p.(patches), aspectratio=:none)
 xaxis!("Threshold", (0., 0.2))
 yaxis!("log(boundary patches + 1)", (0., 9.))
 
