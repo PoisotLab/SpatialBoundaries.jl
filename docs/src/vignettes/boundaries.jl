@@ -25,11 +25,25 @@ W = wombling(A);
 
 # Let's look at the rate of change:
 
-heatmap(W.m)
+heatmap(W.m; c=:nuuk)
 
 # Picking the boundaries is done by passing the wombling output to the
 # `boundaries` function, with a specific threshold giving the proportion of
-# points that should be retained as part of the boundaries:
+# points that should be retained as part of the boundaries. Checking what the
+# effect of this threshold is would be a good idea:
 
-B = boundaries(W);
+thresholds = LinRange(0.0, 0.2, 200)
+patches = [length(boundaries(W; threshold=t)) for t in thresholds]
 
+plot(thresholds, log1p.(patches))
+xaxis!("Threshold")
+yaxis!("log(boundary patches + 1)")
+
+# Let's eyeball this as a 0.01, and see how the patches are distributed:
+
+B = boundaries(W; threshold=0.01);
+
+heatmap(A)
+scatter!([(reverse(x.I)) for x in B], leg=false, msw=0, c=:white)
+
+# We can see that the boundaries of the patches have been well identified!
