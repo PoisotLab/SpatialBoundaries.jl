@@ -1,8 +1,9 @@
 global anyerrors = false
 
 tests = [
-   "all good" => "00_allgood.jl",
-   "linear gradient" => "01_gradient.jl",
+   "mock test" => "00_allgood.jl",
+   "Linear gradient" => "01_gradient.jl",
+   "Boundaries detection" => "02_boundaries.jl",
    "REQUIRE: SimpleSDMLayers" => "R1_simplesdmlayers.jl"
 ]
 

@@ -15,6 +15,9 @@ fields in this type are
 - `m`, a *vector* of rate of change at each (x,y) co-ordinate
 - `θ`, a *vector* of direction of change at each (x,y) co-ordinate
 - `x` and `y`, the coordinates of the barycenter of each triangle in the plan
+
+Note that the type of `x` and `y` should be the same as the element type of ` m`
+and `θ`, because these values are all used when calculating the rate of change.
 """
 mutable struct TriangulationWomble{T<:Number} <: Womble
     m::Vector{T}
@@ -33,6 +36,9 @@ this type are
 - `m`, a *matrix* of rate of change at each (x,y) co-ordinate
 - `θ`, a *matrix* of direction of change at each (x,y) co-ordinate
 - `x` and `y`, the coordinates of the center of each cell
+
+Note that the type of `x` and `y` should be the same as the element type of ` m`
+and `θ`, because these values are all used when calculating the rate of change.
 """
 mutable struct LatticeWomble{T<:Number} <: Womble
     m::Matrix{T}
