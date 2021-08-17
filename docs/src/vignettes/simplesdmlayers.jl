@@ -64,7 +64,7 @@ plot(Lr)
 # With the `Ld` layer storing the direction of change, we *can* do a map - the
 # main issue with mapping directions is colors, which need to have the same
 # begin and endpoint, while remaining accessible to people with color vision
-# defficiencies. Currently, the best palette for this purpose seems to be
-# `:twilight`:
+# defficiencies. [Cyclic color schemes](https://www.fabiocrameri.ch/colourmaps/)
+# work for this purpose:
 
-plot(Ld, c=:twilight, clim=(0, 360))
+plot(Ld, c=:romaO, clim=(0, 360))

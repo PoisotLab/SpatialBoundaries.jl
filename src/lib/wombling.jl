@@ -36,8 +36,13 @@ end
 """
     wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
 
-Wrapper function that implements the lattice wombling algorithm for points
-that are regularly arranged in space.
+Wrapper function that implements the lattice wombling algorithm for points that
+are regularly arranged in space. Note that the matrix is presented in a way that
+is flipped, *i.e.* the `x` coordinates corresponds to the rows, and the `y`
+coordinates correspond to the columns. If you want to think of `x` and `y` as
+geographic coordinates, `y` are the longitudes, and `x` are the latitudes. Using
+the bindings for `SimpleSDMLayers`, this conversion will be performed
+automatically.
 """
 function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
     issorted(x) || throw(ArgumentError("The values of x must be sorted and increasing"))
@@ -69,11 +74,9 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
 end
 
 """
-    wombling(W::T) where {T <: Womble}
+    wombling(m::Matrix{T}) where {T<:Number}
 
-Wombling applied to an already wombled structure - this is a nifty shortcut to
-get the second partial derivatives.
+Shortcut to womble a matrix (using lattice wombling) when no x and y positions
+are given - the cell size in each dimension is expected to be 1.
 """
-wombling(W::T) where {T<:Womble} = wombling(W.x, W.y, W.m)
-
-wombling(m::Matrix{T}) where {T<:Number} = wombling(collect(LinRange(0.0, 1.0, size(m,1))), collect(LinRange(0.0, 1.0, size(m,2))), m)
+wombling(m::Matrix{T}) where {T<:Number} = wombling(convert.(T, 1:size(m,1)), convert.(T, 1:size(m,2)), m)
