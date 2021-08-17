@@ -67,4 +67,4 @@ plot(Lr)
 # defficiencies. [Cyclic color schemes](https://www.fabiocrameri.ch/colourmaps/)
 # work for this purpose:
 
-plot(Ld, c=:romaO, clim=(0, 360))
+plot(Ld, c=:brocO, clim=(0, 360))

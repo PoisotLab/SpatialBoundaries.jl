@@ -37,10 +37,10 @@ W = wombling(landscape);
 
 # Let's have a look at the rate of change:
 
-heatmap(W.m, c=:PuOr, clim=(-1.,1.).*maximum(abs.(extrema(W.m))))
+heatmap(W.m, c=:bilbao, clim=(0, maximum(W.m)))
 
 # The *direction* of change is also given, and is expressed a *wind* direction;
 # for instance, an angle of 180° means that the value is smaller in the South,
 # and larger in the North:
 
-heatmap(W.θ, clim=(0., 360.))
+heatmap(W.θ, c=:brocO, clim=(0., 360.))
