@@ -7,5 +7,5 @@ using SpatialBoundaries
 
 occurrences(
             taxon("Vombatus ursinus", rank = :SPECIES),
-            "limit" => 300
+            "limit" => 300, "country" => "AU"
             )
