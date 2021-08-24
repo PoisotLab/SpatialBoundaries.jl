@@ -9,10 +9,10 @@ default(; dpi=500, size=(600, 600), aspectratio=1, c=:davos, frame=:box)
 
 # Get some points at random
 
-n = 220
+n = 500
 x = rand(n)
 y = rand(n)
-z = [sqrt((x[i]-0.5)^2.0)<0.1 ? rand() : rand()+2.7 for i in eachindex(x)]
+z = [(x[i]<=0.5)&(y[i]<=0.5) ? rand() : 3rand() for i in eachindex(x)]
 
 scatter(x, y, marker_z = z, lab="")
 
@@ -36,5 +36,14 @@ v = [lng[i]*sin(angl[i]) for i in eachindex(angl)]
 
 quiver(W.x, W.y, quiver=(u, v), c=:grey)
 scatter!(W.x, W.y, marker_z = lng, lab="")
-xaxis!(extrema(W.x))
-yaxis!(extrema(W.y))
+
+# Angle histogram
+
+stephist(
+    deg2rad.(sort(vec(W.θ)));
+    proj=:polar,
+    lab="",
+    c=:teal,
+    fill=(0, 0.2, :teal),
+    nbins=100,
+)
