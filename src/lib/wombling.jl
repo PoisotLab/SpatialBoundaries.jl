@@ -1,4 +1,12 @@
 """
+    Unexported function to deal with the coordinates required by VoronoiDelaunay
+"""
+function _nrm(v, m, M, n, N)
+    vn = (v .- m) ./ (M - m)
+    return (vn .* (N - n)) .+ n
+end
+
+"""
     wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
 
 Wrapper function that implements the triangulation wombling algorithm for points
@@ -11,19 +19,33 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     length(x) == length(z) ||
         throw(DimensionMismatch("x and z must have the same dimension"))
 
-    # Do Delaunay thingie for sites
-    mesh = Delaunay.delaunay(hcat(x, y))
+    # Get the range of values for the points
+    min_value, max_value = extrema(vcat(x, y))
 
-    _M = zeros(T, size(mesh.simplices, 1))
+    # Build the Delaunay triangulation
+    nx = _nrm(x, min_value, max_value, min_coord, max_coord)
+    ny = _nrm(y, min_value, max_value, min_coord, max_coord)
+    px = Point2D[Point(nx[i], ny[i]) for i in eachindex(x)]
+    tess = DelaunayTessellation()
+    push!(tess, px)
+    triangles = unique(tess)
+
+    _M = zeros(T, size(length(triangles), 1))
     _θ = similar(_M)
     _X = similar(_M)
     _Y = similar(_M)
 
-    for i in 1:size(mesh.simplices, 1)
-        c = hcat(x, y)[mesh.simplices[i, :], :]
+    # Add the points
+    for (i, triangle) in enumerate(tess)
+        simplices_coordinates = [
+            findfirst(isequal(triangle._a), px),
+            findfirst(isequal(triangle._b), px),
+            findfirst(isequal(triangle._c), px),
+        ]
+        c = hcat(x, y)[simplices_coordinates, :]
         _x = c[:, 1]
         _y = c[:, 2]
-        _z = z[mesh.simplices[i, :]]
+        _z = z[simplices_coordinates]
         _M[i], _θ[i] = SpatialBoundaries._rateofchange(_x, _y, _z)
         _X[i] = sum(c[:, 1]) / 3.0
         _Y[i] = sum(c[:, 2]) / 3.0
@@ -79,4 +101,6 @@ end
 Shortcut to womble a matrix (using lattice wombling) when no x and y positions
 are given - the cell size in each dimension is expected to be 1.
 """
-wombling(m::Matrix{T}) where {T<:Number} = wombling(convert.(T, 1:size(m,1)), convert.(T, 1:size(m,2)), m)
+function wombling(m::Matrix{T}) where {T<:Number}
+    return wombling(convert.(T, 1:size(m, 1)), convert.(T, 1:size(m, 2)), m)
+end
