@@ -35,4 +35,6 @@ u = [lng[i]*cos(angl[i]) for i in eachindex(angl)]
 v = [lng[i]*sin(angl[i]) for i in eachindex(angl)]
 
 quiver(W.x, W.y, quiver=(u, v), c=:grey)
-scatter!(W.x, W.y, marker_z = W.m, lab="")
+scatter!(W.x, W.y, marker_z = lng, lab="")
+xaxis!(extrema(W.x))
+yaxis!(extrema(W.y))
