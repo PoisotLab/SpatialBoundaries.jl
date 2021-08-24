@@ -13,7 +13,7 @@ Wrapper function that implements the triangulation wombling algorithm for points
 that are irregularly arranged in space.
 """
 function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
-    length(x) >= 3 || throw(DimensionMismatch("x must have a minimum length of 3"))
+    length(x) >= 4 || throw(DimensionMismatch("x must have a minimum length of 4"))
     length(x) == length(y) ||
         throw(DimensionMismatch("x and y must have the same dimension"))
     length(x) == length(z) ||
@@ -22,20 +22,22 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     # Get the range of values for the points
     min_value, max_value = extrema(vcat(x, y))
 
-    # Build the Delaunay triangulation
+    # Project the points in the correct range of values
     nx = _nrm(x, min_value, max_value, min_coord, max_coord)
     ny = _nrm(y, min_value, max_value, min_coord, max_coord)
     px = Point2D[Point(nx[i], ny[i]) for i in eachindex(x)]
+    
+    # Build the Delaunay triangulation
     tess = DelaunayTessellation()
     push!(tess, px)
     triangles = unique(tess)
 
-    _M = zeros(T, size(length(triangles), 1))
+    _M = zeros(T, length(triangles))
     _θ = similar(_M)
     _X = similar(_M)
     _Y = similar(_M)
 
-    # Add the points
+    # Get the rate of change for the points
     for (i, triangle) in enumerate(tess)
         simplices_coordinates = [
             findfirst(isequal(triangle._a), px),
