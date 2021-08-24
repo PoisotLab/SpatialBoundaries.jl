@@ -1,7 +1,7 @@
 module SpatialBoundaries
 
 # Dependencies
-import Delaunay
+using VoronoiDelaunay
 using LinearAlgebra
 using Statistics
 using StatsBase
