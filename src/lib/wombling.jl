@@ -23,15 +23,19 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     min_value, max_value = extrema(vcat(x, y))
 
     # Project the points in the correct range of values
-    nx = _nrm(x, min_value, max_value, min_coord+0.1, max_coord-0.1)
-    ny = _nrm(y, min_value, max_value, min_coord+0.1, max_coord-0.1)
+    nx = _nrm(x, min_value, max_value, min_coord, max_coord)
+    ny = _nrm(y, min_value, max_value, min_coord, max_coord)
     px = Point2D[Point(nx[i], ny[i]) for i in eachindex(nx)]
     
     # Build the Delaunay triangulation
     tess = DelaunayTessellation()
     sizehint!(tess, length(px))
-    push!(tess, px)
-    triangles = unique(tess._trigs)
+
+    # This bit is important because we will need to find the correct index of each of these things
+    for p in px
+        push!(tess, p)
+    end
+    triangles = unique(tess)
 
     _M = zeros(T, length(triangles))
     _θ = similar(_M)
@@ -39,19 +43,20 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     _Y = similar(_M)
 
     # Get the rate of change for the points
-    for (i, triangle) in enumerate(tess)
+    for (i, triangle) in enumerate(triangles)
+        centroid_x = mean([triangle._a._x, triangle._b._x, triangle._c._x])
+        centroid_y = mean([triangle._a._y, triangle._b._y, triangle._c._y])
         simplices_coordinates = [
-            findfirst(isequal(triangle._a), px),
-            findfirst(isequal(triangle._b), px),
-            findfirst(isequal(triangle._c), px),
+            findfirst(p -> (p._x == triangle._a._x)&(p._y == triangle._a._y), px),
+            findfirst(p -> (p._x == triangle._b._x)&(p._y == triangle._b._y), px),
+            findfirst(p -> (p._x == triangle._c._x)&(p._y == triangle._c._y), px)
         ]
-        c = hcat(x, y)[simplices_coordinates, :]
-        _x = c[:, 1]
-        _y = c[:, 2]
+        _x = x[simplices_coordinates]
+        _y = y[simplices_coordinates]
         _z = z[simplices_coordinates]
         _M[i], _θ[i] = SpatialBoundaries._rateofchange(_x, _y, _z)
-        _X[i] = sum(c[:, 1]) / 3.0
-        _Y[i] = sum(c[:, 2]) / 3.0
+        _X[i] = mean(_x)
+        _Y[i] = mean(_y)
     end
 
     # Rate of change and direction
