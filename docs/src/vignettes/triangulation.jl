@@ -47,3 +47,7 @@ stephist(
     fill=(0, 0.2, :teal),
     nbins=100,
 )
+
+# Show the rotation with a color
+
+scatter!(W.x, W.y, marker_z = W.θ, c=:vik, clim=(0, 360))
