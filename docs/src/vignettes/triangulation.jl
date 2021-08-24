@@ -34,5 +34,5 @@ lng = lng ./ maximum(lng)
 u = [lng[i]*cos(angl[i]) for i in eachindex(angl)]
 v = [lng[i]*sin(angl[i]) for i in eachindex(angl)]
 
-quiver(x, y, quiver=(u, v), c=:grey)
+quiver(W.x, W.y, quiver=(u, v), c=:grey)
 scatter!(W.x, W.y, marker_z = W.m, lab="")
