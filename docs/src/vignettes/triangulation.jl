@@ -9,10 +9,10 @@ default(; dpi=500, size=(600, 600), aspectratio=1, c=:davos, frame=:box)
 
 # Get some points at random
 
-n = 120
+n = 220
 x = rand(n)
 y = rand(n)
-z = [sqrt((x[i]-0.5)^2.0)<0.15 ? rand() : rand()+0.7 for i in eachindex(x)]
+z = [sqrt((x[i]-0.5)^2.0)<0.1 ? rand() : rand()+2.7 for i in eachindex(x)]
 
 scatter(x, y, marker_z = z, lab="")
 
