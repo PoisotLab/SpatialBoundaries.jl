@@ -23,19 +23,7 @@ W = wombling(x, y, z)
 # Get the rate of change
 
 scatter(x, y, c=:lightgrey, msw=0.0, lab="", m=:square, ms=3)
-scatter!(W.x, W.y, marker_z = W.m, lab="")
-
-# Show the direction of change
-
-angl = (W.θ ./ 360).*2π .- π
-lng = log1p.(W.m)
-lng = lng ./ maximum(lng)
-
-u = [lng[i]*cos(angl[i]) for i in eachindex(angl)]
-v = [lng[i]*sin(angl[i]) for i in eachindex(angl)]
-
-quiver(W.x, W.y, quiver=(u, v), c=:grey)
-scatter!(W.x, W.y, marker_z = lng, lab="")
+scatter!(W.x, W.y, marker_z = log1p.(W.m), lab="")
 
 # Angle histogram
 
