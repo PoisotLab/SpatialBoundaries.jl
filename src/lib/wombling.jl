@@ -30,7 +30,8 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     # Build the Delaunay triangulation
     tess = DelaunayTessellation()
     push!(tess, px)
-    triangles = unique(tess)
+    #triangles = unique(tess)
+    triangles = tess
 
     _M = zeros(T, length(triangles))
     _θ = similar(_M)
