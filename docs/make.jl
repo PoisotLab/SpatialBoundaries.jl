@@ -17,6 +17,7 @@ makedocs(
         "Vignettes" => [
             "Introduction" => "vignettes/introduction.md",
             "Finding boundaries" => "vignettes/boundaries.md",
+            "Triangulation wombling" => "vignettes/triangulation.md",
             "SDM Layers" => "vignettes/simplesdmlayers.md"
         ]
     ]
