@@ -16,4 +16,11 @@ W = wombling(A)
 B = boundaries(W; threshold=0.03)
 @test length(B) == 5
 
+A = rand(Float64, 10, 10)
+n = rand(eachindex(A), 10)
+A[n] .= NaN
+W = wombling(A)
+B = boundaries(W)
+@test !any(map(isnan, W.m[B]))
+
 end
