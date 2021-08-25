@@ -16,4 +16,7 @@ Lt, Ld = SimpleSDMPredictor(W)
 Rt, Rd = SimpleSDMResponse(W)
 @test isa(Rt, SimpleSDMResponse)
 
+@test !any(map(isnan, Rt.grid))
+@test !any(map(isnan, Rd.grid))
+
 end
