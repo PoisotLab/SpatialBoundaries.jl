@@ -8,7 +8,8 @@ identifying which simplices are part of the boundaries.
 """
 function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Number}
     limit = floor(Int, length(W.m) * threshold)
-    return findall(denserank(W; rev=true) .<= limit)
+    nans = count(isnan, W.m)
+    return findall(nans .< denserank(W; rev=true) .<= (limit+nans))
 end
 
 """
@@ -22,5 +23,6 @@ are part of the boundaries.
 """
 function boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
     limit = floor(Int, size(W.m, 2) * size(W.m, 1) * threshold)
-    return findall(denserank(W; rev=true) .<= limit)
+    nans = count(isnan, W.m)
+    return findall(nans .< denserank(W; rev=true) .<= (limit+nans))
 end
