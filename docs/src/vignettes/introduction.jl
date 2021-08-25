@@ -1,17 +1,25 @@
 # # Introduction
 
-# ## Understanding Outputs
+# Broadly the Wombling algorthim traverses a 'landscape' (for example species
+# richness at different degree squares) and describes the the landscape in terms
+# of the _Rate of Change (`m`)_ (think slope/gradient) and _Direction of Change
+# (`θ`)_ (direction of slope). 
 
-# Broadly the Wombling algorthim traverses a given 'landscape' (for example species 
-# richness) and describes the the landscape in terms of the _Rate of Change (𝑀)_ 
-# (think slope/gradient) and _Direction of Change (θ)_ (direction of slope). 
-# **TODO FIGURE with a hypothetical landscpe but also schematic of the process**.
+# **FIGURE with a hypothetical landscape but also schematic of the
+# process?**.
 
-# Something brief on the interpolation process?
+# Both rate and direction of change are calculated interpolating points in a
+# given search window which (depending on how the points are arranged in space),
+# can be done in two ways. 1) **Lattice Wombling:** For points that are
+# regularly arranged in space the search window is 2 x 2 points. 2)
+# **Triangulation Wombling:** For points that irregularly arranged in space
+# nearest neigbours are found using delaunay triangualtion and interpolation is
+# between 3 points.
 
-# In this example, we will see how the `SpatialBoundaries.jl` package works, by
-# taking a random mid-point displacement landscape, and measuring its rate and
-# direction of change.
+# In this example, we will see how the `SpatialBoundaries.jl` package works (as
+# well as interpreting the rates and direction of change), by taking a random
+# mid-point displacement landscape, and measuring its rate and direction of
+# change.
 
 using SpatialBoundaries
 using NeutralLandscapes
@@ -42,17 +50,19 @@ W = wombling(landscape);
 # The resulting `LatticeWomble` object has fields for the rate of change (`m`),
 # the direction of change in degrees (`θ`), and the values of the centers of the
 # cells at `x` and `y` (note that the grid of rates of change is one cell
-# smaller than the original grid!).
+# smaller than the original grid!). These points are in a grid so the **Lattice
+# Wombling** function was used - note that `wombling()` will select the
+# appropriate algorithm based on data input (**TK** link to a triangulation
+# example)
 
 # Let's have a look at the rate of change:
 
 heatmap(W.m, c=:bilbao, clim=(0, maximum(W.m)))
 
 # The rate of change informs us on the potential for there to be a boundary
-# (zone of change) within a specific cell. Cells with a high rate of change are
-# indicative of large differences (changes) in the landscape topology and are
-# suggestive of a boundary as we shift from one 'state' to another e.g.
-# transitioning from a protected to an urban area.
+# (zone of change) within a window. Cells with a high rate of change are
+# indicative of large differences (changes) in the landscape 'topology' and are
+# suggestive of a boundary as we shift from one 'state' to another.
 
 # The *direction* of change is also given, and is expressed a *wind* direction;
 # for instance, an angle of 180° means that the value is smaller in the South,
