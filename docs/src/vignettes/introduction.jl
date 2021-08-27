@@ -52,8 +52,8 @@ W = wombling(landscape);
 # cells at `x` and `y` (note that the grid of rates of change is one cell
 # smaller than the original grid!). These points are in a grid so the **Lattice
 # Wombling** function was used - note that `wombling()` will select the
-# appropriate algorithm based on data input (**TK** link to a triangulation
-# example)
+# appropriate algorithm based on data input. (**TK** link to a triangulation
+# vignette)
 
 # Let's have a look at the rate of change:
 
