@@ -79,3 +79,6 @@ heatmap(W.θ, c=:brocO, clim=(0., 360.))
 # richness are more gradual (rate of change is near constant) but the the
 # direction of change is consistently South-North (i.e. 180°) we can still infer
 # that species richness is 'uniformly' increasing in a South-North direction.
+
+# A note on outputs: The new *x* and *y* co-ordinates correspond to latitude and
+# longitude respectively
