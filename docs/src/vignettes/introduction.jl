@@ -81,4 +81,4 @@ heatmap(W.θ, c=:brocO, clim=(0., 360.))
 # that species richness is 'uniformly' increasing in a South-North direction.
 
 # A note on outputs: The new *x* and *y* co-ordinates correspond to latitude and
-# longitude respectively
+# longitude respectively.
