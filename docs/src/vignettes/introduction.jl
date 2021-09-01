@@ -5,8 +5,7 @@
 # of the _Rate of Change (`m`)_ (think slope/gradient) and _Direction of Change
 # (`θ`)_ (direction of slope). 
 
-# **FIGURE with a hypothetical landscape but also schematic of the
-# process?**.
+# ![](docs/src/assets/fig_concept.png)
 
 # Both rate and direction of change are calculated interpolating points in a
 # given search window which (depending on how the points are arranged in space),
