@@ -5,7 +5,9 @@ using Literate
 # Generate the vignettes using Literate
 vignettes_dir = joinpath("docs", "src", "vignettes")
 for vignette in readdir(vignettes_dir)
-    Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir; credit=false)
+    if occursin(".jl", vignette)
+        Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir; credit=false)
+    end
 end
 
 makedocs(
@@ -29,3 +31,7 @@ deploydocs(
     devbranch="main",
     push_preview=true
 )
+
+readdir(vignettes_dir)[1] == ".jl"
+
+occursin(".jl", readdir(vignettes_dir)[1])
