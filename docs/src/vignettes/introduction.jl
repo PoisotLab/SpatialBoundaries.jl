@@ -3,7 +3,7 @@
 # Broadly the Wombling algorthim traverses a 'landscape' (for example species
 # richness at different degree squares) and describes the the landscape in terms
 # of the _Rate of Change (`m`)_ (think slope/gradient) and _Direction of Change
-# (`θ`)_ (direction of slope). 
+# (`θ`)_ (direction of slope). This process is outlined in the figure below.
 
 # ![](docs/src/assets/fig_concept.png)
 
