@@ -15,9 +15,11 @@ makedocs(
     format = Documenter.HTML(),
     modules = [SpatialBoundaries],
     pages = [
-        "Home" => "index.md",
-        "Vignettes" => [
+        "Home" => [
             "Introduction" => "vignettes/introduction.md",
+            "SpatialBoundaries.jl" => "index.md"
+            ],
+        "Vignettes" => [
             "Finding boundaries" => "vignettes/boundaries.md",
             "Triangulation wombling" => "vignettes/triangulation.md",
             "SDM Layers" => "vignettes/simplesdmlayers.md"
