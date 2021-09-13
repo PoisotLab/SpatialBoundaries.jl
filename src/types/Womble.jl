@@ -48,3 +48,6 @@ mutable struct LatticeWomble{T<:Number} <: Womble
     x::Vector{T}
     y::Vector{T}
 end
+
+Base.angle(w<:T) where {T <: Womble} = w.θ
+magnitude(w<:T) where {T <: Womble} = w.m
