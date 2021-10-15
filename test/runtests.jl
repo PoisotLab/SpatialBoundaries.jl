@@ -4,6 +4,8 @@ tests = [
    "mock test" => "00_allgood.jl",
    "Linear gradient" => "01_gradient.jl",
    "Boundaries detection" => "02_boundaries.jl",
+   "Triangulation wombling" => "03_delaunay.jl",
+   "Direction of change" => "04_direction.jl",
    "REQUIRE: SimpleSDMLayers" => "R1_simplesdmlayers.jl"
 ]
 

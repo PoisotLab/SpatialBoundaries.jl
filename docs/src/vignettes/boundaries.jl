@@ -14,12 +14,12 @@ A = rand(Float64, 200, 150);
 A[1:80, 1:85] .+= 5.0;
 A[110:end, 130:end] .+= 3.0;
 
-# We can check out what this patch looks likes:
+# We can check out what this landscape looks likes:
 
 heatmap(A)
 
-# We can apply a wobling to this landscape, assuming that all cells have the
-# same size:
+# We can apply wombling to this landscape, assuming that all cells have the same
+# size:
 
 W = wombling(A);
 
@@ -58,6 +58,9 @@ heatmap(b, c=:tofino, clim=(0,1))
 # the threshold.
 
 B = boundaries(W; threshold=0.01);
+
+# In the following figure, cells identified as candidate boundaries are marked
+# in white:
 
 heatmap(A)
 scatter!([(reverse(x.I)) for x in B], leg=false, msw=0, c=:white)

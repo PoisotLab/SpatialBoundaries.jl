@@ -17,7 +17,8 @@ fields in this type are
 - `x` and `y`, the coordinates of the barycenter of each triangle in the plan
 
 Note that the type of `x` and `y` should be the same as the element type of ` m`
-and `θ`, because these values are all used when calculating the rate of change.
+and `θ`, because these values are all used when calculating the rate of change
+and that `x` and `y` correspond to latitude and longitude respectively.
 """
 mutable struct TriangulationWomble{T<:Number} <: Womble
     m::Vector{T}
@@ -38,7 +39,8 @@ this type are
 - `x` and `y`, the coordinates of the center of each cell
 
 Note that the type of `x` and `y` should be the same as the element type of ` m`
-and `θ`, because these values are all used when calculating the rate of change.
+and `θ`, because these values are all used when calculating the rate of change
+and that `x` and `y` correspond to latitude and longitude respectively.
 """
 mutable struct LatticeWomble{T<:Number} <: Womble
     m::Matrix{T}

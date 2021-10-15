@@ -13,7 +13,7 @@ using StatsPlots
 # functionalities for `SimpleSDMLayers` as part of `SpatialBoundaries`, and can
 # safely be ignored.
 
-# In this example, we will look at temperature data over Noth America, and
+# In this example, we will look at temperature data over North America, and
 # measure the rate of change, as well as the direction of it. These data are
 # extracted from the WorldClim database.
 
