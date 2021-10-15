@@ -1,11 +1,46 @@
-## Wombling with wombats
+# # Wombling with wombats
 
 using GBIF
 using SpatialBoundaries
+using SimpleSDMLayers
+using Statistics
 
-# we can extract wombat occurence records using `GBIF.jl`
+# We can extract wombat occurence records using `GBIF.jl`
 
-occurrences(
-            taxon("Vombatus ursinus", rank = :SPECIES),
+observations = occurrences(
+            taxon("Vombatus ursinus", rank=:SPECIES),
             "country" => "AU"
             )
+
+while length(observations) <= min(2_500, size(observations))
+    occurences!(observations)
+end
+
+# Let's grab some climate predictors
+
+aus_boundingbox = (left=110., right=160., bottom=-46., top=-8.)
+layers = SimpleSMDPredictors(WorldClim, BioClim, 1:10; aus_boundingbox...)
+
+# https://docs.ecojulia.org/SimpleSDMLayers.jl/stable/sdm/gbif/
+
+observation_density = mask(temperature, observations, Float32)
+observation_kernels = slidingwindow(observation_density, mean, 100.0)
+
+# ...
+
+plot(observation_kernels)
+
+# ...
+
+Wr, Wd = SimpleSDMPredictor(wombling(observations_kernels))
+
+# ...
+
+heatmap(Wr; c=:nuuk)
+
+# ...
+
+heatmap(Wd, c=:brocO, clim=(0., 360.))
+
+# ...
+
