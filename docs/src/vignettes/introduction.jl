@@ -1,16 +1,19 @@
 # # Introduction
 
-# Broadly the Wombling algorthim traverses a 'landscape' (for example species
+# Broadly the Wombling algorithm traverses a 'landscape' (for example species
 # richness at different degree squares) and describes the the landscape in terms
-# of the _Rate of Change (`m`)_ (think slope/gradient) and _Direction of Change
-# (`θ`)_ (direction of slope). This process is outlined in the figure below.
+# of the *Rate of Change (`m`)* (think slope/gradient) and *Direction of Change
+# (`θ`)* (direction of slope). This process is outlined in the figure below.
 
 # ![image info](assets/fig_concept.png)
 
-# Both rate and direction of change are calculated interpolating points in a
+# Both rate and direction of change are calculated by interpolating points in a
 # given search window which (depending on how the points are arranged in space),
-# can be done in two ways. 1) **Lattice Wombling:** For points that are
-# regularly arranged in space the search window is 2 x 2 points. 2)
+# can be done in two ways.
+
+# **Lattice Wombling:** For points that are regularly arranged in space the
+# search window is 2 × 2 points.
+
 # **Triangulation Wombling:** For points that irregularly arranged in space
 # nearest neigbours are found using delaunay triangualtion and interpolation is
 # between 3 points.
@@ -51,8 +54,7 @@ W = wombling(landscape);
 # cells at `x` and `y` (note that the grid of rates of change is one cell
 # smaller than the original grid!). These points are in a grid so the **Lattice
 # Wombling** function was used - note that `wombling()` will select the
-# appropriate algorithm based on data input. (**TK** link to a triangulation
-# vignette)
+# appropriate algorithm based on data input.
 
 # Let's have a look at the rate of change:
 
@@ -69,15 +71,15 @@ heatmap(W.m, c=:bilbao, clim=(0, maximum(W.m)))
 
 heatmap(W.θ, c=:brocO, clim=(0., 360.))
 
-# The direction of change is _not_ the direction the boundary would be if you
+# The direction of change is *not* the direction the boundary would be if you
 # were to draw it on the landscape but rather the direction the rate of change
 # is 'moving in'. This means it is possible to think of and use the direction of
-# change independently of caluclating boundaries _per se_ and can be used to
+# change independently of caluclating boundaries *per se* and can be used to
 # inform how the landscape is behaving/changing in a more 'continuous' way as
 # opposed to discrete zones/boundaries. For example if changes in species
 # richness are more gradual (rate of change is near constant) but the the
 # direction of change is consistently South-North (i.e. 180°) we can still infer
 # that species richness is 'uniformly' increasing in a South-North direction.
 
-# A note on outputs: The new *x* and *y* co-ordinates correspond to latitude and
+# A note on outputs: The new $x$ and $y$ co-ordinates correspond to latitude and
 # longitude respectively.
