@@ -7,10 +7,7 @@ using Statistics
 
 # We can extract wombat occurence records using `GBIF.jl`
 
-observations = occurrences(
-            taxon("Vombatus ursinus", rank=:SPECIES),
-            "country" => "AU"
-            )
+observations = occurrences(taxon("Vombatus ursinus"; rank=:SPECIES), "country" => "AU")
 
 while length(observations) <= min(2_500, size(observations))
     occurences!(observations)
@@ -18,7 +15,7 @@ end
 
 # Let's grab some climate predictors
 
-aus_boundingbox = (left=110., right=160., bottom=-46., top=-8.)
+aus_boundingbox = (left=110.0, right=160.0, bottom=-46.0, top=-8.0)
 layers = SimpleSMDPredictors(WorldClim, BioClim, 1:10; aus_boundingbox...)
 
 # https://docs.ecojulia.org/SimpleSDMLayers.jl/stable/sdm/gbif/
@@ -40,7 +37,6 @@ heatmap(Wr; c=:nuuk)
 
 # ...
 
-heatmap(Wd, c=:brocO, clim=(0., 360.))
+heatmap(Wd; c=:brocO, clim=(0.0, 360.0))
 
 # ...
-
