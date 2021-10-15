@@ -16,7 +16,7 @@ end
 # Let's grab some climate predictors
 
 aus_boundingbox = (left=110.0, right=160.0, bottom=-46.0, top=-8.0)
-layers = SimpleSMDPredictors(WorldClim, BioClim, 1:10; aus_boundingbox...)
+layers = SimpleSDMPredictors(WorldClim, BioClim, 1:19; aus_boundingbox...)
 
 # https://docs.ecojulia.org/SimpleSDMLayers.jl/stable/sdm/gbif/
 
