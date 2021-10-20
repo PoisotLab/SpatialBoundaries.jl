@@ -24,7 +24,7 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
 
     # Project the points in the correct range of values
     nx = _nrm(x, min_value, max_value, VoronoiDelaunay.min_coord, VoronoiDelaunay.max_coord)
-    ny = _nrm(y, min_value, max_value, VoronoiDelauna.min_coord, VoronoiDelaunay.max_coord)
+    ny = _nrm(y, min_value, max_value, VoronoiDelaunay.min_coord, VoronoiDelaunay.max_coord)
     px = Point2D[Point(nx[i], ny[i]) for i in eachindex(nx)]
     
     # Build the Delaunay triangulation
