@@ -2,7 +2,6 @@ module SpatialBoundaries
 
 # Dependencies
 using VoronoiDelaunay
-using GeometricalPredicates
 using LinearAlgebra
 using Statistics
 using StatsBase

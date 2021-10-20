@@ -4,7 +4,6 @@ authors = ["Tanya Strydom <tanya.strydom@umontreal.ca>", "Timothée Poisot <timo
 version = "0.0.1"
 
 [deps]
-GeometricalPredicates = "fd0ad045-b25c-564e-8f9c-8ef5c5f21267"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
