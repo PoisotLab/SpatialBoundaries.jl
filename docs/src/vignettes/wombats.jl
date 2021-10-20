@@ -24,30 +24,24 @@ while length(observations) <= min(10_000, size(observations))
 end
 
 # Let's grab some climate predictors and make a bare-bones SDM
+# For simplicity the BioCLim layers have been 'pre-selected' and 
+# a more complete vignette on designing a BIOCLIM model can be 
+# found in the
+# [SimpleSDMLayer documentation](https://docs.ecojulia.org/SimpleSDMLayers.jl/latest/sdm/bioclim/)
 
 aus_boundingbox = (left=130.0, right=160.0, bottom=-45.0, top=-20.0)
-layers_to_keep = [2, 3, 6, 9, 15, 18, 19]
+bioclim_layers = [2, 3, 6, 9, 15, 18, 19] # Some pre-determined BioClim layers to pull
 
 predictors =
     convert.(
-        SimpleSDMLayer, SimpleSDMPredictor(WorldClim, BioClim, layers_to_keep; resolution=10.0, aus_boundingbox...)
+        SimpleSDMLayer, SimpleSDMPredictor(WorldClim, BioClim, bioclim_layers; aus_boundingbox...)
     );
-
-plot(
-    plot.(
-        predictors, grid=:none, axes=false, frame=:none, leg=false, c=:imola
-    )...,
-)
 
 _pixel_score(x) = 2.0(x > 0.5 ? 1.0 - x : x);
 
-# obs should be Boolean
+presences = mask(predictors[1], observations, Bool) # Want obs to be boolean
 
-presences = mask(predictors[1], observations, Bool)
-plot(convert(Float32, presences); c=cgrad([:lightgrey, :black]), leg=false)
-
-
-# SDM
+# Actual SDM
 
 function SDM(predictor::T1, observations::T2) where {T1<:SimpleSDMLayer,T2<:SimpleSDMLayer}
     _tmp = mask(observations, predictor)
@@ -63,22 +57,23 @@ end
 models = [SDM(predictor, presences) for predictor in predictors];
 prediction = SDM(predictors, models)
 
+# Lets have a look at our model
+
 plot(prediction; c=:bamako, frame=:box)
 xaxis!("Longitude")
 yaxis!("Latitude")
 
-# ...
 
-# ...
+# We can now feed our model predictions into the wombling function
+# as you would with any other dataset.
 
 Wr, Wd = SimpleSDMPredictor(wombling(prediction))
 
-# ...
+# We can now have a look at the rate of change...
 
 plot(Wr; c=:nuuk)
 
-# ...
+# as well as the direction when it comes to habitat suitability
+# for wombats
 
 heatmap(Wd; c=:brocO, clim=(0.0, 360.0))
-
-# ...
