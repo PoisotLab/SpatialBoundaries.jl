@@ -49,6 +49,7 @@ heatmap(landscape)
 
 # Getting the lattice wombling is done with
 
+
 W = wombling(landscape);
 
 # The resulting `LatticeWomble` object has fields for the rate of change (`m`),
@@ -60,7 +61,7 @@ W = wombling(landscape);
 
 # Let's have a look at the rate of change:
 
-heatmap(W.m, c=:bilbao, clim=(0, maximum(W.m)))
+heatmap(W.m, c=:tokyo, clim=(0, maximum(W.m)))
 
 # The rate of change informs us on the potential for there to be a boundary
 # (zone of change) within a window. Cells with a high rate of change are
@@ -71,7 +72,7 @@ heatmap(W.m, c=:bilbao, clim=(0, maximum(W.m)))
 # for instance, an angle of 180° means that the value is smaller in the South,
 # and larger in the North:
 
-heatmap(W.θ, c=:brocO, clim=(0., 360.))
+heatmap(W.θ, c=:bamO, clim=(0., 360.))
 
 # The direction of change is *not* the direction the boundary would be if you
 # were to draw it on the landscape but rather the direction the rate of change
