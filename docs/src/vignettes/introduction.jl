@@ -72,7 +72,7 @@ heatmap(W.m, c=:tokyo, clim=(0, maximum(W.m)))
 # for instance, an angle of 180° means that the value is smaller in the South,
 # and larger in the North:
 
-heatmap(W.θ, c=:bamO, clim=(0., 360.))
+heatmap(W.θ, c=:romaO, clim=(0., 360.))
 
 # The direction of change is *not* the direction the boundary would be if you
 # were to draw it on the landscape but rather the direction the rate of change
