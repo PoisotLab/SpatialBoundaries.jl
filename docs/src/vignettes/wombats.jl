@@ -71,9 +71,9 @@ Wr, Wd = SimpleSDMPredictor(wombling(prediction))
 
 # We can now have a look at the rate of change...
 
-plot(Wr; c=:nuuk)
+plot(Wr; c=:tokyo)
 
 # as well as the direction when it comes to habitat suitability
 # for wombats
 
-heatmap(Wd; c=:brocO, clim=(0.0, 360.0))
+heatmap(Wd; c=:corkO, clim=(0.0, 360.0))
