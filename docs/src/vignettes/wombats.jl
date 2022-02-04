@@ -1,5 +1,14 @@
 # # Wombling with wombats
 
+# We couldn't not have a wombling example without wombats - where's the pun in
+# that??
+
+# ![Photo credit to reddit user B_major_7](assets/portal_wombat.png)
+
+#  In this example we will use wombat occurence records from GBIF to construct a
+#  bare-bones SDM (using `SimpleSDMLayers.jl`) from which we can look at the
+#  habitat boundaries of wombats.
+
 using GBIF
 using GeometryBasics
 using GLM
@@ -27,7 +36,7 @@ end
 # For simplicity the BioCLim layers have been 'pre-selected' and 
 # a more complete vignette on designing a BIOCLIM model can be 
 # found in the
-# [SimpleSDMLayer documentation](https://docs.ecojulia.org/SimpleSDMLayers.jl/latest/sdm/bioclim/)
+# [SimpleSDMLayers documentation](https://docs.ecojulia.org/SimpleSDMLayers.jl/latest/sdm/bioclim/)
 
 aus_boundingbox = (left=130.0, right=160.0, bottom=-45.0, top=-20.0)
 bioclim_layers = [2, 3, 6, 9, 15, 18, 19] # Some pre-determined BioClim layers to pull
