@@ -5,7 +5,7 @@ using SimpleSDMLayers
 
 Performs a lattice wombling on a `SimpleSDMLayer`.
 """
-function wombling(layer::T; convert_to::Type=Float64) where {T <: SimpleSDMLayer}
+function wombling(layer::T; convert_to::Type=Float64) where {T<:SimpleSDMLayer}
     try
         global nan = convert(convert_to, NaN)
     catch
@@ -26,7 +26,7 @@ end
 # adding this method makes the code easier to write
 Base.isnan(::Nothing) = false
 
-function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
+function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T<:LatticeWomble}
     rate = SimpleSDMLayers.SimpleSDMPredictor(W.m, extrema(W.y)..., extrema(W.x)...)
     direction = SimpleSDMLayers.SimpleSDMPredictor(W.θ, extrema(W.y)..., extrema(W.x)...)
     rate.grid[findall(isnan, rate.grid)] .= nothing
@@ -34,4 +34,6 @@ function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     return (rate, direction)
 end
 
-SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble} = convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
+function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T<:LatticeWomble}
+    return convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
+end
