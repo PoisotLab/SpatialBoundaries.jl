@@ -8,6 +8,7 @@ identifying which simplices are part of the boundaries. The NaN values in the
 rates of change are not going to be a part of the boundaries.
 """
 function boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T<:Number}
+    @assert 0.0 < threshold <= 1.0
     limit = floor(Int, length(W.m) * threshold)
     nans = count(isnan, W.m)
     return findall(nans .< denserank(W; rev=true) .<= (limit+nans))
@@ -24,6 +25,7 @@ are part of the boundaries. The NaN values in the rates of change are not going
 to be a part of the boundaries.
 """
 function boundaries(W::LatticeWomble{T}; threshold::T=0.1) where {T<:Number}
+    @assert 0.0 < threshold <= 1.0
     limit = floor(Int, size(W.m, 2) * size(W.m, 1) * threshold)
     nans = count(isnan, W.m)
     return findall(nans .< denserank(W; rev=true) .<= (limit+nans))
