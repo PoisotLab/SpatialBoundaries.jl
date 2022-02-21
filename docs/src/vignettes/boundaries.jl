@@ -33,7 +33,7 @@ heatmap(W.m; c=:nuuk)
 # effect of this threshold is would be a good idea:
 
 thresholds = LinRange(0.0, 0.2, 200)
-patches = [length(boundaries(W; threshold=t)) for t in thresholds]
+patches = [length(boundaries(W, t)) for t in thresholds]
 
 plot(thresholds, log1p.(patches), aspectratio=:none)
 xaxis!("Threshold", (0., 0.2))
@@ -49,7 +49,7 @@ yaxis!("log(boundary patches + 1)", (0., 9.))
 b = similar(W.m)
 
 for t in reverse(LinRange(0.0, 1.0, 200))
-    b[boundaries(W; threshold=t)] .= t
+    b[boundaries(W, t)] .= t
 end
 
 heatmap(b, c=:tofino, clim=(0,1))
@@ -57,7 +57,7 @@ heatmap(b, c=:tofino, clim=(0,1))
 # This also suggests that we will get well delineated patches for low values of
 # the threshold.
 
-B = boundaries(W; threshold=0.01);
+B = boundaries(W, 0.01);
 
 # In the following figure, cells identified as candidate boundaries are marked
 # in white:
