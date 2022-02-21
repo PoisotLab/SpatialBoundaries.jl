@@ -22,4 +22,10 @@ W = wombling(A)
 B = boundaries(W)
 @test !any(map(isnan, W.m[B]))
 
+A = zeros(Float64, 101, 101)
+A[1:51, 1:51] = rand(Float64, 51, 51)
+W = wombling(A)
+B = boundaries(W, 0.1; ignorezero=true)
+@test length(B) == ceil(Int64, 51*51*0.1)
+
 end

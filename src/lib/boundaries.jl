@@ -16,7 +16,7 @@ function boundaries(W::T, t=0.1; ignorezero=false) where {T <: Womble}
     v = filter(!isnan, W.m)
     # The zeros get removed IFF we require it
     if ignorezero
-        filter!(iszero, v)
+        filter!(!iszero, v)
     end
     # This is the quantile function
     qf = StatsBase.ecdf(v)
