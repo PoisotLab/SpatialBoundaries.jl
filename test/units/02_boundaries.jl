@@ -10,11 +10,10 @@ W = wombling(A)
 B = boundaries(W)
 @test length(B) == prod(size(A).-1)
 
-A[4, 8] = 5.0
-A[5, 8] = 5.0
+A = rand(Float64, 101, 101)
 W = wombling(A)
-B = boundaries(W; threshold=0.03)
-@test length(B) == 5
+B = boundaries(W, 0.2)
+@test length(B) == 0.2*prod(size(W.m))
 
 A = rand(Float64, 10, 10)
 n = rand(eachindex(A), 10)
