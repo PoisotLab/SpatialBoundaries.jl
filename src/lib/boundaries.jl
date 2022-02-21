@@ -1,3 +1,9 @@
+function _quantizer(x)
+    v = filter(!isnan, x)
+    return StatsBase.ecdf(v)
+    # TODO what's up with 0?
+end
+
 """
     boundaries(W::TriangulationWomble{T}; threshold::T=0.1) where {T <: Number}
 
