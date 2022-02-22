@@ -11,7 +11,7 @@ a rate of change of 0.
 """
 function boundaries(W::T, t=0.1; ignorezero=false) where {T <: Womble}
     #The threshold must be in ]0,1]
-    @assert 0.0 < t <= 1.0
+    @assert 0.0 <= t <= 1.0
     # Remove the NaN values from the rate object
     v = filter(!isnan, W.m)
     # The zeros get removed IFF we require it
