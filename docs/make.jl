@@ -30,10 +30,9 @@ makedocs(
 deploydocs(
     deps=Deps.pip("pygments", "python-markdown-math"),
     repo="github.com/EcoJulia/SpatialBoundaries.jl.git",
-    devbranch="main",
     push_preview=true
 )
 
-readdir(vignettes_dir)[1] == ".jl"
-
-occursin(".jl", readdir(vignettes_dir)[1])
+#readdir(vignettes_dir)[1] == ".jl"
+#occursin(".jl", readdir(vignettes_dir)[1])
+#devbranch="main",
