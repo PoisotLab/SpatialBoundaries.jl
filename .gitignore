@@ -28,3 +28,6 @@ Manifest.toml
 
 # MacOS nonsense
 .DS_Store
+
+# Varia
+scribbles.jl
