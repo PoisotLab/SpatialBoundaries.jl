@@ -1,9 +1,9 @@
 """
-    omlwv(w::Vector{T}) where {T <: LatticeWombling}
+    omlwv(w::Vector{T}) where {T <: Womble}
 
 Overall Mean Lattice-Wombling Value, as in Fortin 1994
 """
-function omlwv(w::Vector{T}) where {T<:LatticeWomble}
+function omlwv(w::Vector{T}) where {T<:Womble}
     # Check that all wombles have the same dimensions and coordinates
     @assert all([w1.x == w2.x for w1 in w, w2 in w])
     @assert all([w1.y == w2.y for w1 in w, w2 in w])
@@ -21,5 +21,5 @@ function omlwv(w::Vector{T}) where {T<:LatticeWomble}
         end
     end
     average_direction = rad2deg.(α) .+ 180.0
-    return LatticeWomble(m, average_direction, w[1].x, w[1].y)
+    return MeanWomble(m, average_direction, w[1].x, w[1].y)
 end
