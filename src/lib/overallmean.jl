@@ -1,9 +1,10 @@
 """
-    omlwv(w::Vector{T}) where {T <: Womble}
+    mean(w::Vector{T}) where {T <: LatticeWomble}
 
-Overall Mean Lattice-Wombling Value, as in Fortin 1994
+Overall Mean Wombling Value, as in Fortin 1994
+
 """
-function omlwv(w::Vector{T}) where {T<:LatticeWomble}
+function mean(w::Vector{T}) where {T<:LatticeWomble}
     # Check that all wombles have the same dimensions and coordinates
     @assert all([w1.x == w2.x for w1 in w, w2 in w])
     @assert all([w1.y == w2.y for w1 in w, w2 in w])
@@ -25,11 +26,10 @@ function omlwv(w::Vector{T}) where {T<:LatticeWomble}
 end
 
 """
-    omlwv(w::Vector{T}) where {T <: TriangulationWomble}
+    mean(w::Vector{T}) where {T <: TriangulationWomble}
 
-Overall Mean Lattice-Wombling Value, as in Fortin 1994
 """
-function omlwv(w::Vector{T}) where {T<:TriangulationWomble}
+function mean(w::Vector{T}) where {T<:TriangulationWomble}
     # Check that all wombles have the same dimensions and coordinates
     @assert all([w1.x == w2.x for w1 in w, w2 in w])
     @assert all([w1.y == w2.y for w1 in w, w2 in w])
