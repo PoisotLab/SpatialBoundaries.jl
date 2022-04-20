@@ -1,8 +1,8 @@
 """
     mean(w::Vector{T}) where {T <: LatticeWomble}
 
-Overall Mean Wombling Value, as in Fortin 1994
-
+Function that calculates the mean wombling value for a vector of wombled layers
+of type LatticeWomble that occupy the same spatial area.
 """
 function mean(w::Vector{T}) where {T<:LatticeWomble}
     # Check that all wombles have the same dimensions and coordinates
@@ -28,6 +28,8 @@ end
 """
     mean(w::Vector{T}) where {T <: TriangulationWomble}
 
+Function that calculates the mean wombling value for a vector of wombled layers
+of type TriangualtionWomble that occupy the same spatial area.
 """
 function mean(w::Vector{T}) where {T<:TriangulationWomble}
     # Check that all wombles have the same dimensions and coordinates
