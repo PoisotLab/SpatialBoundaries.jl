@@ -22,5 +22,10 @@ function Statistics.mean(w::Vector{T}) where {T<:Womble}
         end
     end
     average_direction = rad2deg.(α) .+ 180.0
-    return LatticeWomble(m, average_direction, w[1].x, w[1].y)
+    if isa(w[1], LatticeWomble)
+        return LatticeWomble(m, average_direction, w[1].x, w[1].y)
+    end
+    if isa(w[1], TriangulationWomble)
+        return TriangulationWomble(m, average_direction, w[1].x, w[1].y)
+    end
 end
