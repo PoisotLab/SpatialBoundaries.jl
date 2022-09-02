@@ -5,7 +5,7 @@
 # of the *Rate of Change (`m`)* (think slope/gradient) and *Direction of Change
 # (`θ`)* (direction of slope). A high-level overview is roughly outlined in the
 # figure below --- note that `m` is concerned with the differnece/variation
-# between the points in the window and `θ` with the direction of the the slope.
+# between the points in the window and `θ` with the direction of the slope.
 
 # ![image info](assets/fig_concept.png)
 
@@ -80,10 +80,9 @@ heatmap(W.θ, c=:romaO, clim=(0., 360.))
 # change independently of calculating boundaries *per se* and can be used to
 # inform how the landscape is behaving/changing in a more 'continuous' way as
 # opposed to discrete zones/boundaries. For example if changes in species
-# richness are more gradual (rate of change is near constant) but the the
-# direction of change is consistently South-North (*i.e.* 180°) we can still
-# infer that species richness is 'uniformly' increasing in a South-North
-# direction.
+# richness are more gradual (rate of change is near constant) but the direction
+# of change is consistently South-North (*i.e.* 180°) we can still infer that
+# species richness is 'uniformly' increasing in a South-North direction.
 
 # A note on outputs: The new $x$ and $y$ co-ordinates correspond to latitude and
-# longitude respectively.
+# longitude respectively (which is the opposite of what one might expect).
