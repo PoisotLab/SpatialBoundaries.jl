@@ -9,7 +9,7 @@ rates of change are not going to be a part of the boundaries. The keyword
 `ignorezero`, which defaults to `false`, can be used to remove the points with
 a rate of change of 0.
 """
-function boundaries(W::T, t=0.1; ignorezero=false) where {T <: Womble}
+function boundaries(W::T, t = 0.1; ignorezero = false) where {T <: Womble}
     #The threshold must be in ]0,1]
     @assert 0.0 <= t <= 1.0
     # Remove the NaN values from the rate object
