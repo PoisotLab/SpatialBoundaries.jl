@@ -1,12 +1,13 @@
 global anyerrors = false
 
 tests = [
-   "mock test" => "00_allgood.jl",
-   "Linear gradient" => "01_gradient.jl",
-   "Boundaries detection" => "02_boundaries.jl",
-   "Triangulation wombling" => "03_delaunay.jl",
-   "Direction of change" => "04_direction.jl",
-   "REQUIRE: SimpleSDMLayers" => "R1_simplesdmlayers.jl"
+    "mock test" => "00_allgood.jl",
+    "Linear gradient" => "01_gradient.jl",
+    "Boundaries detection" => "02_boundaries.jl",
+    "Triangulation wombling" => "03_delaunay.jl",
+    "Direction of change" => "04_direction.jl",
+    "Overall mean wombling" => "05_mean.jl",
+    "REQUIRE: SimpleSDMLayers" => "R1_simplesdmlayers.jl",
 ]
 
 for test in tests
