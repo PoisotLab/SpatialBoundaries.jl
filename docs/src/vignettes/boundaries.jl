@@ -1,8 +1,9 @@
 # # Finding boundaries
 
 # The output of a `wombling` operation can be used to pick boundaries, *i.e.*
-# areas where the values on the grid transition sharply. We will illustrate this
-# with a simple example of a three-patch landscape.
+# areas where the values within the landscape transition sharply indicating
+# different 'patches'. We will illustrate this with a simple example of a
+# three-patch landscape.
 
 using SpatialBoundaries
 using StatsPlots
@@ -39,7 +40,7 @@ plot(thresholds, log1p.(patches), aspectratio=:none)
 xaxis!("Threshold", (0., 0.2))
 yaxis!("log(boundary patches + 1)", (0., 9.))
 
-# Let's eyeball this as a 0.01, and see how the patches are distributed.
+# Let's eyeball this as 0.01, and see how the patches are distributed.
 
 # Another way we can look at the boundaries is to see *when* a patch is
 # considered to be a boundary. To do so we will create an empty matrix, and fill
