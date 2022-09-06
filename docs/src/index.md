@@ -6,6 +6,7 @@ Documentation for SpatialBoundaries.jl
 
 ```@docs
 wombling
+overallmean
 boundaries
 ```
 
