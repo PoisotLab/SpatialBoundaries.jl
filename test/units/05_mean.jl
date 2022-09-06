@@ -8,5 +8,4 @@ W = [wombling(A) for i in 1:10]
 
 @test mean(W) isa eltype(W)
 
-
 end

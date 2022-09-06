@@ -1,11 +1,9 @@
-using SimpleSDMLayers
-
 """
     wombling(layer::T; convert_to::Type=Float64) where {T <: SimpleSDMLayer}
 
 Performs a lattice wombling on a `SimpleSDMLayer`.
 """
-function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayer}
+function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayers.SimpleSDMLayer}
     try
         global nan = convert(convert_to, NaN)
     catch
@@ -13,8 +11,8 @@ function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLay
     end
 
     # Get the values for x and y
-    y = collect(longitudes(layer))
-    x = collect(latitudes(layer))
+    y = collect(SimpleSDMLayers.longitudes(layer))
+    x = collect(SimpleSDMLayers.latitudes(layer))
 
     # Get the grid
     z = convert(Matrix{Union{Nothing, convert_to}}, layer.grid)
@@ -35,5 +33,5 @@ function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
 end
 
 function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble}
-    return convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
+    return convert.(SimpleSDMLayers.SimpleSDMResponse, SimpleSDMLayers.SimpleSDMPredictor(W))
 end
