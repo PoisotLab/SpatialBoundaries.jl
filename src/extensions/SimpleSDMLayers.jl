@@ -1,11 +1,9 @@
-using SimpleSDMLayers
-
 """
     wombling(layer::T; convert_to::Type=Float64) where {T <: SimpleSDMLayer}
 
 Performs a lattice wombling on a `SimpleSDMLayer`.
 """
-function wombling(layer::T; convert_to::Type=Float64) where {T<:SimpleSDMLayer}
+function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayers.SimpleSDMLayer}
     try
         global nan = convert(convert_to, NaN)
     catch
@@ -13,11 +11,11 @@ function wombling(layer::T; convert_to::Type=Float64) where {T<:SimpleSDMLayer}
     end
 
     # Get the values for x and y
-    y = collect(longitudes(layer))
-    x = collect(latitudes(layer))
+    y = collect(SimpleSDMLayers.longitudes(layer))
+    x = collect(SimpleSDMLayers.latitudes(layer))
 
     # Get the grid
-    z = convert(Matrix{Union{Nothing,convert_to}}, layer.grid)
+    z = convert(Matrix{Union{Nothing, convert_to}}, layer.grid)
     replace!(z, nothing => nan)
     return wombling(x, y, convert(Matrix{convert_to}, z))
 end
@@ -26,7 +24,7 @@ end
 # adding this method makes the code easier to write
 Base.isnan(::Nothing) = false
 
-function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T<:LatticeWomble}
+function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     rate = SimpleSDMLayers.SimpleSDMPredictor(W.m, extrema(W.y)..., extrema(W.x)...)
     direction = SimpleSDMLayers.SimpleSDMPredictor(W.θ, extrema(W.y)..., extrema(W.x)...)
     rate.grid[findall(isnan, rate.grid)] .= nothing
@@ -34,6 +32,6 @@ function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T<:LatticeWomble}
     return (rate, direction)
 end
 
-function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T<:LatticeWomble}
-    return convert.(SimpleSDMResponse, SimpleSDMPredictor(W))
+function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble}
+    return convert.(SimpleSDMLayers.SimpleSDMResponse, SimpleSDMLayers.SimpleSDMPredictor(W))
 end

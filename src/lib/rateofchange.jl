@@ -31,7 +31,7 @@ function _rateofchange(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T <: Num
     length(x) == length(z) || throw(DimensionMismatch("x and z must have the same length"))
 
     # Get the matrix of coefficients
-    C = cat(y, x, fill(one(T), length(x)); dims=(2, 2))
+    C = cat(y, x, fill(one(T), length(x)); dims = (2, 2))
     coeff = Base.inv(C) * z
 
     X = sum(C[:, 1]) / 3.0
@@ -47,7 +47,7 @@ end
 """
     _rateofchange(A::Matrix{T}) where {T <: Number}
 
-Rate of change for a series of a lattice points. Returns the rate of change and 
+Rate of change for a series of a lattice points. Returns the rate of change and
 the gradient for a 2x2 grid of numbers.
 """
 function _rateofchange(x::Vector{T}, y::Vector{T}, z::Matrix{T};) where {T <: Number}

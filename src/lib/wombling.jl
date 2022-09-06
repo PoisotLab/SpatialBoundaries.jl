@@ -12,7 +12,7 @@ end
 Wrapper function that implements the triangulation wombling algorithm for points
 that are irregularly arranged in space.
 """
-function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
+function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T <: Number}
     length(x) >= 3 || throw(DimensionMismatch("x must have a minimum length of 4"))
     length(x) == length(y) ||
         throw(DimensionMismatch("x and y must have the same dimension"))
@@ -26,7 +26,7 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
     nx = _nrm(x, min_value, max_value, min_coord, max_coord)
     ny = _nrm(y, min_value, max_value, min_coord, max_coord)
     px = Point2D[VoronoiDelaunay.Point(nx[i], ny[i]) for i in eachindex(nx)]
-    
+
     # Build the Delaunay triangulation
     tess = DelaunayTessellation()
     sizehint!(tess, length(px))
@@ -47,9 +47,9 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Vector{T}) where {T<:Number}
         centroid_x = mean([triangle._a._x, triangle._b._x, triangle._c._x])
         centroid_y = mean([triangle._a._y, triangle._b._y, triangle._c._y])
         simplices_coordinates = [
-            findfirst(p -> (p._x == triangle._a._x)&(p._y == triangle._a._y), px),
-            findfirst(p -> (p._x == triangle._b._x)&(p._y == triangle._b._y), px),
-            findfirst(p -> (p._x == triangle._c._x)&(p._y == triangle._c._y), px)
+            findfirst(p -> (p._x == triangle._a._x) & (p._y == triangle._a._y), px),
+            findfirst(p -> (p._x == triangle._b._x) & (p._y == triangle._b._y), px),
+            findfirst(p -> (p._x == triangle._c._x) & (p._y == triangle._c._y), px),
         ]
         _x = x[simplices_coordinates]
         _y = y[simplices_coordinates]
@@ -74,14 +74,14 @@ geographic coordinates, `y` are the longitudes, and `x` are the latitudes. Using
 the bindings for `SimpleSDMLayers`, this conversion will be performed
 automatically.
 """
-function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
+function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T <: Number}
     issorted(x) || throw(ArgumentError("The values of x must be sorted and increasing"))
     issorted(y) || throw(ArgumentError("The values of y must be sorted and increasing"))
     length(x) == size(z, 1) || throw(
-        DimensionMismatch("The length of x must be equal to the first dimension of z")
+        DimensionMismatch("The length of x must be equal to the first dimension of z"),
     )
     length(y) == size(z, 2) || throw(
-        DimensionMismatch("The length of y must be equal to the second dimension of z")
+        DimensionMismatch("The length of y must be equal to the second dimension of z"),
     )
 
     _M = zeros(T, size(z) .- 1)
@@ -90,7 +90,7 @@ function wombling(x::Vector{T}, y::Vector{T}, z::Matrix{T}) where {T<:Number}
     for j in 1:size(_M, 2), i in 1:size(_M, 1) # womble along a 2x2 window
         tmp = z[i:(i + 1), j:(j + 1)]
         _M[i, j], _θ[i, j] = SpatialBoundaries._rateofchange(
-            x[i:(i + 1)], y[j:(j + 1)], tmp
+            x[i:(i + 1)], y[j:(j + 1)], tmp,
         )
     end
 
@@ -109,6 +109,6 @@ end
 Shortcut to womble a matrix (using lattice wombling) when no x and y positions
 are given - the cell size in each dimension is expected to be 1.
 """
-function wombling(m::Matrix{T}) where {T<:Number}
+function wombling(m::Matrix{T}) where {T <: Number}
     return wombling(convert.(T, 1:size(m, 1)), convert.(T, 1:size(m, 2)), m)
 end
