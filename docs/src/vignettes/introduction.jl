@@ -4,17 +4,30 @@
 # richness at different degree squares) and describes the the landscape in terms
 # of the *Rate of Change (`m`)* (think slope/gradient) and *Direction of Change
 # (`θ`)* (direction of slope). A high-level overview is roughly outlined in the
-# figure below --- note that `m` is concerned with the differnece/variation
+# figure below --- note that `m` is concerned with the difference/variation
 # between the points in the window and `θ` with the direction of the slope.
+# Although the wombling algorithm (as implemented here) is designed to work with
+# two-dimensional *i.e.* planar data (as delimited by $x$ and $y$), it is
+# beneficial to view this plane as a three-dimensional object (or series of
+# curves), as shown in panel A of the figure below. Here the 'amplitude' of the
+# curvature of the plane is determined by the value of $z$ and the rate and
+# direction of change is calculated by using the first-order partial derivative
+# ($\partial$) of the surface (curve) as described by $f(x,y)$ (panel B). Using
+# the rate of change it is also possible to identify candidate boundaries
+# (dashed line in panel C) in the landscape that indicate 'shifts' from one
+# state to another.
 
 # ![image info](assets/fig_concept.png)
 
 # Both rate and direction of change are calculated by interpolating points in a
 # given search window which (depending on how the points are arranged in space),
-# can be done in two ways.
+# and can be done in two ways.
 
 # **Lattice Wombling:** For points that are regularly arranged in space the
-# search window is 2 × 2 points.
+# search window is 2 × 2 points. Note that the wombled landscape will be will be
+# smaller than the original landscape (A) due to the interpolation process
+# *i.e.* where we originally had an $n \times r$ grid we now have an ($n$ -
+# 1)($r$ - 1) sized grid.
 
 # **Triangulation Wombling:** For points that irregularly arranged in space
 # nearest neigbours are found using delaunay triangualtion and interpolation is
