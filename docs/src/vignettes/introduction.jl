@@ -3,9 +3,11 @@
 # Broadly the Wombling algorithm traverses a 'landscape' (for example species
 # richness at different degree squares) and describes the the landscape in terms
 # of the *Rate of Change (`m`)* (think slope/gradient) and *Direction of Change
-# (`θ`)* (direction of slope). A high-level overview is roughly outlined in the
-# figure below --- note that `m` is concerned with the difference/variation
-# between the points in the window and `θ` with the direction of the slope.
+# (`θ`)* (direction of slope). For a more in-depth overview you can refer to the
+# preprint available at the following
+# [10.32942/osf.io/sjxd8](https://t.co/gCyaEXWPVi), otherwise follow along for a
+# high-level overview is roughly outlined in the figure below.
+
 # Although the wombling algorithm (as implemented here) is designed to work with
 # two-dimensional *i.e.* planar data (as delimited by $x$ and $y$), it is
 # beneficial to view this plane as a three-dimensional object (or series of
