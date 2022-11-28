@@ -21,6 +21,9 @@ export boundaries
 include(joinpath("lib", "overallmean.jl"))
 export mean
 
+include(joinpath("extensions", "SimpleSDMLayers.jl"))
+export wombling
+
 function __init__()
     @require SimpleSDMLayers = "2c645270-77db-11e9-22c3-0f302a89c64c" include(
         joinpath("extensions", "SimpleSDMLayers.jl"),
