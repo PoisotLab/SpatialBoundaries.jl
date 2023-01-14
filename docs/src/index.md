@@ -7,7 +7,6 @@ Documentation for SpatialBoundaries.jl
 ```@docs
 wombling
 mean
-simplesdmlayers
 boundaries
 ```
 
