@@ -102,9 +102,7 @@ end
 # boundaries *i.e.* the cells with the top 10% of highest rate of change values.
 
 plot(
-    # first plot a grey 'basemap'
     plot(rate; c=:black, frame=:box),
-    # plot masked rate of change values
     mask(b, rate); 
     c=:grey75, frame=:box, colorbar=false)
 
@@ -138,7 +136,6 @@ stephist(
                 c=:teal,
                 fill=(0, 0.2, :teal),
                 nbins=100,
-                #guide="",
                 yshowaxis=false,
                 normalize = true
                ),
@@ -148,7 +145,6 @@ stephist(
                 c=:red,
                 fill=(0, 0.2, :red),
                 nbins=100,
-                #guide="",
                 yshowaxis=false,
                 normalize = true
         )
