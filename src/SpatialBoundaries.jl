@@ -24,3 +24,4 @@ export mean
 
 include(joinpath("extensions", "SimpleSDMLayers.jl"))
 
+end # module
