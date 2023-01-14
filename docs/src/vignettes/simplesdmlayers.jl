@@ -74,3 +74,81 @@ wombled_layers = broadcast(wombling, (lc[1:4]))
 # cover. This will 'flatten' the four wombled layers into a single
 # `LatticeWomble` object.
 
+wombled_mean = mean(wombled_layers)
+
+# From the `wombled_mean` object we can 'extract' the layers for both the mean
+# rate and direction of change. For ease of plotting we will also convert these
+# layers to `SimpleSDMPredictor` type objects. It is also possible to call these
+# matrices directly from the `wombled_mean` object using `wombled_mean.m` or
+# `wombled_mean.θ` for the rate and direction respectively.
+
+rate, direction = SimpleSDMPredictor(wombled_mean)
+
+# Lastly we can identify candidate boundaries using the `boundaries`. Here we
+# will use a thresholding value (t) of 0.1 and save these candidate boundary
+# cells as `b`. Note that we are now working with a `SimpleSDMResponse` object
+# and this is simply for ease of plotting.
+
+b = similar(rate)
+
+for t in 0.1
+    b.grid[boundaries(wombled_mean, t; ignorezero=true)] .= t
+end
+
+# In addition to being used to help find candidate boundary cells we can also
+# use this object (`b`) as masking layer when visualising wombling outputs. In
+# this case we can view the `rate` layer  in a similar fashion to the original
+# landcover layer but by masking it with `b` we only plot the candidate
+# boundaries *i.e.* the cells with the top 10% of highest rate of change values.
+
+plot(
+    # first plot a grey 'basemap'
+    plot(rate; c=:black, frame=:box),
+    # plot masked rate of change values
+    mask(b, rate); 
+    c=:grey75, frame=:box, colorbar=false)
+
+# For this example we will plot the direction of change as radial plots to get
+# an idea of the prominent direction of change. Here we will plot *all* the
+# direction values from `direction` for which the rate of change is greater than
+# zero (so as to avoid denoting directions for a slope that does not exist) as
+# well as the `direction` values from only candidate cells using the same
+# masking principle as what we did for the rate of change. It is of course also
+# possible to forgo the radial plots and plot the direction of change in the
+# same manner as the rate of change should one wish.
+
+# Before we plot let us create our two 'masked layers'. For all direction values
+# for which there is a corresponding rate of change greater than zero we can use
+# `rate` as a masking layer but first replace all zero values with 'nothing'.
+# For the candidate boundary cells we can simply mask `direction` with `b` as we
+# did for the rate of change.
+
+direction_all = mask(replace(rate, 0 => nothing), direction)
+
+direction_candidate = mask(b, direction)
+
+# Because stephist() requires a vector of radians for plotting we must first
+# collect the cells and convert them from degrees to radians.
+
+stephist(
+        stephist(
+                deg2rad.(collect(direction_all));
+                proj=:polar,
+                lab="All cells",
+                c=:teal,
+                fill=(0, 0.2, :teal),
+                nbins=100,
+                #guide="",
+                yshowaxis=false,
+                normalize = true
+               ),
+            deg2rad.(collect(direction_candidate));
+                proj=:polar,
+                lab="Boundary cells",
+                c=:red,
+                fill=(0, 0.2, :red),
+                nbins=100,
+                #guide="",
+                yshowaxis=false,
+                normalize = true
+        )
