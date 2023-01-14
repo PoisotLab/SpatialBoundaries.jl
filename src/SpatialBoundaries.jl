@@ -3,7 +3,6 @@ module SpatialBoundaries
 # Dependencies
 using VoronoiDelaunay
 using LinearAlgebra
-using SimpleSDMLayers
 using Statistics
 using StatsBase
 using Requires
@@ -22,6 +21,10 @@ export boundaries
 include(joinpath("lib", "overallmean.jl"))
 export mean
 
-include(joinpath("extensions", "SimpleSDMLayers.jl"))
+function __init__()
+    @require SimpleSDMLayers = "2c645270-77db-11e9-22c3-0f302a89c64c" include(
+        joinpath("extensions", "SimpleSDMLayers.jl"),
+    )
+end
 
 end # module
