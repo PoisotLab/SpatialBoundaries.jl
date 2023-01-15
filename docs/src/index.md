@@ -1,12 +1,9 @@
 # SpatialBoundaries.jl
 
-Documentation for SpatialBoundaries.jl
-
 ## Core functions
 
 ```@docs
 wombling
-mean
 boundaries
 ```
 

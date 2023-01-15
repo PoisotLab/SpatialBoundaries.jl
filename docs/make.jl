@@ -10,10 +10,6 @@ for vignette in readdir(vignettes_dir)
     end
 end
 
-# Remove the geotiffs
-rm("vignettes/assets/EarthEnv/"; force=true, recursive=true)
-rm("vignettes/assets/WorldClim/"; force = true, recursive = true)
-
 makedocs(
     sitename = "SpatialBoundaries",
     format = Documenter.HTML(),
@@ -30,6 +26,10 @@ makedocs(
         ]
     ]
 )
+
+# Remove the geotiffs AFTER Documenter compiles the vignettes
+rm("vignettes/assets/EarthEnv/"; force=true, recursive=true)
+rm("vignettes/assets/WorldClim/"; force = true, recursive = true)
 
 deploydocs(
     deps=Deps.pip("pygments", "python-markdown-math"),
