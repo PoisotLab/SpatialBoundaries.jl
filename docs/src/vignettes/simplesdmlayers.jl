@@ -27,8 +27,6 @@ using Plots
 # functionalities for `SimpleSDMLayers` as part of `SpatialBoundaries`, and can
 # safely be ignored.
 
-SimpleSDMLayers._layers_assets_path = mktempdir() #hide
-
 # First we can start by defining the extent of the Southwestern islands of
 # Hawaii, which can be used to restrict the extraction of the various landcover
 # layers from the EarthEnv database. We do the actual database querying using

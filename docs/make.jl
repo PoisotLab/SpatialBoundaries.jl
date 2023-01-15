@@ -7,6 +7,7 @@ vignettes_dir = joinpath("docs", "src", "vignettes")
 for vignette in readdir(vignettes_dir)
     if occursin(".jl", vignette)
         Literate.markdown(joinpath(vignettes_dir, vignette), vignettes_dir; credit=false)
+        rm(joinpath(vignettes_dir, "assets"); force=true, recursive=true)
     end
 end
 
