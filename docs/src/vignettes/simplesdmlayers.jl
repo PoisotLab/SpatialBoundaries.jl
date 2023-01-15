@@ -23,28 +23,21 @@ using SpatialBoundaries
 using SimpleSDMLayers
 using Plots
 
-# Note that the warning about dependencies is a side-effect of loading some
-# functionalities for `SimpleSDMLayers` as part of `SpatialBoundaries`, and can
-# safely be ignored.
-
 # First we can start by defining the extent of the Southwestern islands of
 # Hawaii, which can be used to restrict the extraction of the various landcover
-# layers from the EarthEnv database. We do the actual database querying using
-# `SimpleSDMLayers`.
+# layers from the EarthEnv database. We do the actual layers querying using
+# `SimpleSDMLayers`:
 
-hawaii = (left=-160.2, right=-154.5, bottom=18.6, top=22.5)
-
+hawaii = (left = -160.2, right = -154.5, bottom = 18.6, top = 22.5)
 landcover = SimpleSDMPredictor(EarthEnv, LandCover, 1:12; hawaii...)
 
 # We can remove all the areas that contain 100% water from the landcover data as
 # our question of interest is restricted to the terrestrial realm. We do this by
 # using the "Open Water" layer to mask over each of the landcover layers
-# individually.
+# individually:
 
 ow_index = findfirst(isequal("Open Water"), layernames(EarthEnv, LandCover))
-
 not_water = broadcast(!isequal(100), landcover[ow_index])
-
 lc = [mask(not_water, layer) for layer in landcover]
 
 # As layers one through four of the EarthEnv data are concerned with data on
@@ -55,8 +48,7 @@ lc = [mask(not_water, layer) for layer in landcover]
 # woody cover for the Southwestern islands.
 
 tree_lc = convert(Float32, sum(lc[1:4]))
-
-plot(tree_lc; c=:bamako, frame=:box)
+plot(tree_lc; c = :Greens, frame = :box, leg = false)
 
 # Although we have previously summed the four landcover layers for the actual
 # wombling part we will apply the wombling function to each layer before we
@@ -64,7 +56,6 @@ plot(tree_lc; c=:bamako, frame=:box)
 # this will apply `wombling` in an element-wise fashion to the four different
 # woody cover layers. This will give as a vector containing four `LatticeWomble`
 # objects (since the input data was in the form of a matrix).
-
 
 wombled_layers = broadcast(wombling, (lc[1:4]))
 
@@ -92,7 +83,7 @@ rate, direction = SimpleSDMPredictor(wombled_mean)
 b = similar(rate)
 
 for t in 0.1
-    b.grid[boundaries(wombled_mean, t; ignorezero=true)] .= t
+    b.grid[boundaries(wombled_mean, t; ignorezero = true)] .= t
 end
 
 # In addition to being used to help find candidate boundary cells we can also
@@ -102,9 +93,9 @@ end
 # boundaries *i.e.* the cells with the top 10% of highest rate of change values.
 
 plot(
-    plot(rate; c=:black, frame=:box),
-    mask(b, rate); 
-    c=:grey75, frame=:box, colorbar=false)
+    plot(rate; c = :grey85, frame = :box),
+    mask(b, rate);
+    c = :black, frame = :box, colorbar = false)
 
 # For this example we will plot the direction of change as radial plots to get
 # an idea of the prominent direction of change. Here we will plot *all* the
@@ -129,22 +120,20 @@ direction_candidate = mask(b, direction)
 # collect the cells and convert them from degrees to radians.
 
 stephist(
-        stephist(
-                deg2rad.(collect(direction_all));
-                proj=:polar,
-                lab="All cells",
-                c=:teal,
-                fill=(0, 0.2, :teal),
-                nbins=100,
-                yshowaxis=false,
-                normalize = true
-               ),
-            deg2rad.(collect(direction_candidate));
-                proj=:polar,
-                lab="Boundary cells",
-                c=:red,
-                fill=(0, 0.2, :red),
-                nbins=100,
-                yshowaxis=false,
-                normalize = true
-        )
+    deg2rad.(collect(direction_all));
+    proj = :polar,
+    lab = "All cells",
+    c = :teal,
+    nbins = 36,
+    yshowaxis = false,
+    normalize = true
+)
+
+stephist!(deg2rad.(collect(direction_candidate));
+    proj = :polar,
+    lab = "Boundary cells",
+    c = :red,
+    nbins = 36,
+    yshowaxis = false,
+    normalize = true,
+)
