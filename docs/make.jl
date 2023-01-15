@@ -27,6 +27,9 @@ makedocs(
     ]
 )
 
+# Remove the assets files
+rm("assets/EarthEnv", recursive=true)
+
 deploydocs(
     deps=Deps.pip("pygments", "python-markdown-math"),
     repo="github.com/PoisotLab/SpatialBoundaries.jl.git",
