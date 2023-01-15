@@ -138,4 +138,4 @@ stephist!(deg2rad.(collect(direction_candidate));
     normalize = true,
 )
 
-rm(joinpath(SimpleSDMLayers._layers_assets_path, "EarthEvn"); force=true, recursive=true) #hide
+rm(joinpath(SimpleSDMLayers._layers_assets_path, "EarthEnv"); force=true, recursive=true) #hide
