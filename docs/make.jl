@@ -30,6 +30,7 @@ makedocs(;
 
 @info "Prepare to remove"
 run(`find . -type f -name ".tif" -delete`)
+run(`find . -type f -name ".tif"`)
 
 @info "Prepare to deploy"
 deploydocs(;
