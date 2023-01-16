@@ -141,4 +141,6 @@ stephist(
         yshowaxis=false,
         normalize = false)
 
+# End
+
 rm(joinpath(SimpleSDMLayers._layers_assets_path, "EarthEnv"); force=true, recursive=true) #hide
