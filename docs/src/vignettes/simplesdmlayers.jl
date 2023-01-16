@@ -117,25 +117,28 @@ direction_all = mask(replace(rate, 0 => nothing), direction)
 direction_candidate = mask(b, direction)
 
 # Because stephist() requires a vector of radians for plotting we must first
-# collect the cells and convert them from degrees to radians.
+# collect the cells and convert them from degrees to radians. Then we can start
+# by plotting the direction of change of *all* cells.
 
 stephist(
-    deg2rad.(collect(direction_all));
-    proj = :polar,
-    lab = "All cells",
-    c = :teal,
-    nbins = 36,
-    yshowaxis = false,
-    normalize = true
-)
+         deg2rad.(collect(direction_all));
+         proj=:polar,
+         lab="",
+         c=:teal,
+         nbins = 36,
+         yshowaxis=false,
+         normalize = false)
 
-stephist!(deg2rad.(collect(direction_candidate));
-    proj = :polar,
-    lab = "Boundary cells",
-    c = :red,
-    nbins = 36,
-    yshowaxis = false,
-    normalize = true,
-)
+# Followed by plotting the direction of change only for cells that are
+# considered as candidate boundary cells.
+
+stephist(
+        deg2rad.(collect(direction_candidate));
+        proj=:polar,
+        lab="",
+        c=:red,
+        nbins = 36,
+        yshowaxis=false,
+        normalize = false)
 
 rm(joinpath(SimpleSDMLayers._layers_assets_path, "EarthEnv"); force=true, recursive=true) #hide
