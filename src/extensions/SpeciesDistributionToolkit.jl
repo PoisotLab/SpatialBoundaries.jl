@@ -3,7 +3,7 @@
 
 Performs a lattice wombling on a `SimpleSDMLayer`.
 """
-function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayers.SimpleSDMLayer}
+function SpatialBoundaries.wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayer}
     try
         global nan = convert(convert_to, NaN)
     catch
@@ -24,7 +24,7 @@ end
 # adding this method makes the code easier to write
 Base.isnan(::Nothing) = false
 
-function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
+function SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     rate = SimpleSDMLayers.SimpleSDMPredictor(W.m, extrema(W.y)..., extrema(W.x)...)
     direction = SimpleSDMLayers.SimpleSDMPredictor(W.θ, extrema(W.y)..., extrema(W.x)...)
     rate.grid[findall(isnan, rate.grid)] .= nothing
@@ -32,6 +32,6 @@ function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     return (rate, direction)
 end
 
-function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble}
+function SimpleSDMResponse(W::T) where {T <: LatticeWomble}
     return convert.(SimpleSDMLayers.SimpleSDMResponse, SimpleSDMLayers.SimpleSDMPredictor(W))
 end
