@@ -20,8 +20,9 @@
 # $y$, $z$) and the output data would be typed as `TriangulationWomble` objects.
 
 using SpatialBoundaries
-using SimpleSDMLayers
-using Plots
+using SpeciesDistributionToolkit
+using CairoMakie
+import Plots # Required for radial histograms
 
 # First we can start by defining the extent of the Southwestern islands of
 # Hawaii, which can be used to restrict the extraction of the various landcover
@@ -29,15 +30,17 @@ using Plots
 # `SimpleSDMLayers`:
 
 hawaii = (left = -160.2, right = -154.5, bottom = 18.6, top = 22.5)
-landcover = SimpleSDMPredictor(EarthEnv, LandCover, 1:12; hawaii...)
+dataprovider = RasterData(EarthEnv, LandCover)
+landcover_classes = SimpleSDMDatasets.layers(dataprovider)
+landcover = [SimpleSDMPredictor(dataprovider; layer=class, full=true, hawaii...) for class in landcover_classes]
 
 # We can remove all the areas that contain 100% water from the landcover data as
 # our question of interest is restricted to the terrestrial realm. We do this by
 # using the "Open Water" layer to mask over each of the landcover layers
 # individually:
 
-ow_index = findfirst(isequal("Open Water"), layernames(EarthEnv, LandCover))
-not_water = broadcast(!isequal(100), landcover[ow_index])
+ow_index = findfirst(isequal("Open Water"), landcover_classes)
+not_water = landcover[ow_index] .!== 0x64
 lc = [mask(not_water, layer) for layer in landcover]
 
 # As layers one through four of the EarthEnv data are concerned with data on
@@ -45,10 +48,11 @@ lc = [mask(not_water, layer) for layer in landcover]
 # Broadleaf Trees", "Deciduous Broadleaf Trees", and "Mixed/Other Trees") we
 # will work with only these layers. For a quick idea we of what the raw
 # landcover data looks like we can sum these four layers and plot the total
-# woody cover for the Southwestern islands.
+# woody cover:
 
-tree_lc = convert(Float32, sum(lc[1:4]))
-plot(tree_lc; c = :Greens, frame = :box, leg = false)
+classes_with_trees = findall(contains.(landcover_classes, "Trees"))
+tree_lc = convert(Float32, reduce(+, lc[classes_with_trees]))
+heatmap(tree_lc; colormap=:linear_kbgyw_5_98_c62_n256)
 
 # Although we have previously summed the four landcover layers for the actual
 # wombling part we will apply the wombling function to each layer before we
@@ -57,7 +61,7 @@ plot(tree_lc; c = :Greens, frame = :box, leg = false)
 # woody cover layers. This will give as a vector containing four `LatticeWomble`
 # objects (since the input data was in the form of a matrix).
 
-wombled_layers = broadcast(wombling, (lc[1:4]))
+wombled_layers = wombling.(lc[classes_with_trees]);
 
 # As we are interested in overall woody cover for Southwestern islands we can
 # take the `wombled_layers` vector and use them with the `mean` function to get
@@ -65,7 +69,7 @@ wombled_layers = broadcast(wombling, (lc[1:4]))
 # cover. This will 'flatten' the four wombled layers into a single
 # `LatticeWomble` object.
 
-wombled_mean = mean(wombled_layers)
+wombled_mean = mean(wombled_layers);
 
 # From the `wombled_mean` object we can 'extract' the layers for both the mean
 # rate and direction of change. For ease of plotting we will also convert these
@@ -81,21 +85,14 @@ rate, direction = SimpleSDMPredictor(wombled_mean)
 # and this is simply for ease of plotting.
 
 b = similar(rate)
+b.grid[boundaries(wombled_mean, 0.1; ignorezero = true)] .= 1.0
 
-for t in 0.1
-    b.grid[boundaries(wombled_mean, t; ignorezero = true)] .= t
-end
+# We will overlay the identified boundaries (in green) over the rate of change
+# (in levels of grey):
 
-# In addition to being used to help find candidate boundary cells we can also
-# use this object (`b`) as masking layer when visualising wombling outputs. In
-# this case we can view the `rate` layer  in a similar fashion to the original
-# landcover layer but by masking it with `b` we only plot the candidate
-# boundaries *i.e.* the cells with the top 10% of highest rate of change values.
-
-plot(
-    plot(rate; c = :grey85, frame = :box),
-    mask(b, rate);
-    c = :black, frame = :box, colorbar = false)
+heatmap(rate, colormap=[:grey95, :grey5])
+heatmap!(b, colormap=[:transparent, :green])
+current_figure()
 
 # For this example we will plot the direction of change as radial plots to get
 # an idea of the prominent direction of change. Here we will plot *all* the
@@ -120,8 +117,8 @@ direction_candidate = mask(b, direction)
 # collect the cells and convert them from degrees to radians. Then we can start
 # by plotting the direction of change of *all* cells.
 
-stephist(
-         deg2rad.(collect(direction_all));
+Plots.stephist(
+         deg2rad.(values(direction_all));
          proj=:polar,
          lab="",
          c=:teal,
@@ -132,8 +129,8 @@ stephist(
 # Followed by plotting the direction of change only for cells that are
 # considered as candidate boundary cells.
 
-stephist(
-        deg2rad.(collect(direction_candidate));
+Plots.stephist(
+        deg2rad.(values(direction_candidate));
         proj=:polar,
         lab="",
         c=:red,
