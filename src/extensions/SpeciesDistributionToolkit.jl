@@ -24,7 +24,7 @@ end
 # adding this method makes the code easier to write
 Base.isnan(::Nothing) = false
 
-function SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
+function SimpleSDMLayers.SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     rate = SimpleSDMLayers.SimpleSDMPredictor(W.m, extrema(W.y)..., extrema(W.x)...)
     direction = SimpleSDMLayers.SimpleSDMPredictor(W.θ, extrema(W.y)..., extrema(W.x)...)
     rate.grid[findall(isnan, rate.grid)] .= nothing
@@ -32,6 +32,6 @@ function SimpleSDMPredictor(W::T) where {T <: LatticeWomble}
     return (rate, direction)
 end
 
-function SimpleSDMResponse(W::T) where {T <: LatticeWomble}
+function SimpleSDMLayers.SimpleSDMResponse(W::T) where {T <: LatticeWomble}
     return convert.(SimpleSDMLayers.SimpleSDMResponse, SimpleSDMLayers.SimpleSDMPredictor(W))
 end
