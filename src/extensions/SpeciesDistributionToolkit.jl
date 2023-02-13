@@ -3,7 +3,7 @@
 
 Performs a lattice wombling on a `SimpleSDMLayer`.
 """
-function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayers.SimpleSDMLayer}
+function wombling(layer::T; convert_to::Type = Float64) where {T <: SimpleSDMLayer}
     try
         global nan = convert(convert_to, NaN)
     catch

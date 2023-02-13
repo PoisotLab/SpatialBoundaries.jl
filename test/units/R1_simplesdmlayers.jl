@@ -1,13 +1,12 @@
 module SBTestSimpleSDMLayers
 
 using SpatialBoundaries
-using SimpleSDMLayers
+using SpeciesDistributionToolkit
 using Test
 
 precipitation = SimpleSDMPredictor(
-    WorldClim,
-    BioClim,
-    12;
+    RasterData(WorldClim2, BioClim),
+    layer=12;
     left = -80.0,
     right = -56.0,
     bottom = 44.0,
