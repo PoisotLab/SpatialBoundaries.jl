@@ -5,7 +5,7 @@ using SpeciesDistributionToolkit
 using Test
 
 precipitation = SimpleSDMPredictor(
-    RasterData(WorldClim, BioClim),
+    RasterData(WorldClim2, BioClim),
     layer=12;
     left = -80.0,
     right = -56.0,
