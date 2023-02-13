@@ -8,4 +8,4 @@ SpeciesDistributionToolkit = "2c645270-77db-11e9-22c3-0f302a89c64c"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [compat]
-SimpleSDMLayers = "0.0"
+SpeciesDistributionToolkit = "0.0"
