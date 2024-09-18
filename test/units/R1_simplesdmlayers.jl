@@ -4,9 +4,10 @@ using SpatialBoundaries
 using SpeciesDistributionToolkit
 using Test
 
-precipitation = SimpleSDMPredictor(
-    RasterData(WorldClim2, BioClim),
-    layer=12;
+precipitation = SDMLayer(
+    RasterData(WorldClim2, BioClim);
+    resolution=0.5,
+    layer="BIO12",
     left = -80.0,
     right = -56.0,
     bottom = 44.0,
@@ -15,15 +16,7 @@ precipitation = SimpleSDMPredictor(
 
 W = wombling(precipitation)
 
-@test isa(W, LatticeWomble)
-
-Lt, Ld = SimpleSDMPredictor(W)
-@test isa(Lt, SimpleSDMPredictor)
-
-Rt, Rd = SimpleSDMResponse(W)
-@test isa(Rt, SimpleSDMResponse)
-
-@test !any(map(isnan, Rt.grid))
-@test !any(map(isnan, Rd.grid))
+@test isa(W.rate, SDMLayer)
+@test isa(W.direction, SDMLayer)
 
 end

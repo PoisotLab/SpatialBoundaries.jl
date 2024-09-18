@@ -22,7 +22,6 @@
 using SpatialBoundaries
 using SpeciesDistributionToolkit
 using CairoMakie
-import Plots # Required for radial histograms
 
 # First we can start by defining the extent of the Southwestern islands of
 # Hawaii, which can be used to restrict the extraction of the various landcover
@@ -32,7 +31,7 @@ import Plots # Required for radial histograms
 hawaii = (left = -160.2, right = -154.5, bottom = 18.6, top = 22.5)
 dataprovider = RasterData(EarthEnv, LandCover)
 landcover_classes = SimpleSDMDatasets.layers(dataprovider)
-landcover = [SimpleSDMPredictor(dataprovider; layer=class, full=true, hawaii...) for class in landcover_classes]
+landcover = [SDMLayer(dataprovider; layer=class, full=true, hawaii...) for class in landcover_classes]
 
 # We can remove all the areas that contain 100% water from the landcover data as
 # our question of interest is restricted to the terrestrial realm. We do this by
@@ -41,7 +40,8 @@ landcover = [SimpleSDMPredictor(dataprovider; layer=class, full=true, hawaii...)
 
 ow_index = findfirst(isequal("Open Water"), landcover_classes)
 not_water = landcover[ow_index] .!== 0x64
-lc = [mask(not_water, layer) for layer in landcover]
+nodata!(not_water, false)
+[mask!(layer, not_water) for layer in landcover]
 
 # As layers one through four of the EarthEnv data are concerned with data on
 # woody cover (*i.e.* "Evergreen/Deciduous Needleleaf Trees", "Evergreen
@@ -51,7 +51,7 @@ lc = [mask(not_water, layer) for layer in landcover]
 # woody cover:
 
 classes_with_trees = findall(contains.(landcover_classes, "Trees"))
-tree_lc = convert(Float32, reduce(+, lc[classes_with_trees]))
+tree_lc = convert(SDMLayer{Float64}, reduce(+, landcover[classes_with_trees]))
 heatmap(tree_lc; colormap=:linear_kbgyw_5_98_c62_n256)
 
 # Although we have previously summed the four landcover layers for the actual
@@ -61,7 +61,7 @@ heatmap(tree_lc; colormap=:linear_kbgyw_5_98_c62_n256)
 # woody cover layers. This will give as a vector containing four `LatticeWomble`
 # objects (since the input data was in the form of a matrix).
 
-wombled_layers = wombling.(lc[classes_with_trees]);
+wombled_layers = wombling.(landcover[classes_with_trees]);
 
 # As we are interested in overall woody cover for Southwestern islands we can
 # take the `wombled_layers` vector and use them with the `mean` function to get
@@ -69,29 +69,21 @@ wombled_layers = wombling.(lc[classes_with_trees]);
 # cover. This will 'flatten' the four wombled layers into a single
 # `LatticeWomble` object.
 
-wombled_mean = mean(wombled_layers);
-
-# From the `wombled_mean` object we can 'extract' the layers for both the mean
-# rate and direction of change. For ease of plotting we will also convert these
-# layers to `SimpleSDMPredictor` type objects. It is also possible to call these
-# matrices directly from the `wombled_mean` object using `wombled_mean.m` or
-# `wombled_mean.θ` for the rate and direction respectively.
-
-rate, direction = SimpleSDMPredictor(wombled_mean)
+rate = mosaic(mean, (x -> x.rate).(wombled_layers))
+direction = mosaic(a -> atan(mean(sin.(deg2rad.(a))), mean(cos.(deg2rad.(a)))), (x -> x.direction).(wombled_layers))
 
 # Lastly we can identify candidate boundaries using the `boundaries`. Here we
 # will use a thresholding value (t) of 0.1 and save these candidate boundary
 # cells as `b`. Note that we are now working with a `SimpleSDMResponse` object
 # and this is simply for ease of plotting.
 
-b = similar(rate)
-b.grid[boundaries(wombled_mean, 0.1; ignorezero = true)] .= 1.0
+(quantize(rate).>=0.1) |> heatmap
 
 # We will overlay the identified boundaries (in green) over the rate of change
 # (in levels of grey):
 
 heatmap(rate, colormap=[:grey95, :grey5])
-heatmap!(b, colormap=[:transparent, :green])
+#heatmap!(b, colormap=[:transparent, :green])
 current_figure()
 
 # For this example we will plot the direction of change as radial plots to get
@@ -117,14 +109,11 @@ direction_candidate = mask(b, direction)
 # collect the cells and convert them from degrees to radians. Then we can start
 # by plotting the direction of change of *all* cells.
 
-Plots.stephist(
-         deg2rad.(values(direction_all));
-         proj=:polar,
-         lab="",
-         c=:teal,
-         nbins = 36,
-         yshowaxis=false,
-         normalize = false)
+f = Figure()
+ax = PolarAxis(f[1,1])
+h = fit(Histogram, values(direction); nbins=50)
+stairs!(ax, h.edges[1], h.weights[[axes(h.weights,1)...,1]])
+current_figure()
 
 # Followed by plotting the direction of change only for cells that are
 # considered as candidate boundary cells.
