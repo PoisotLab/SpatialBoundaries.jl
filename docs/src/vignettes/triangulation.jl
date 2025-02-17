@@ -1,20 +1,17 @@
 # # Triangulation wombling
 
 using SpatialBoundaries
-using StatsPlots
-
-# Plot defaults
-
-default(; dpi=500, size=(600, 600), aspectratio=1, c=:davos, frame=:box)
+using CairoMakie
+using StatsBase
 
 # Get some points at random
 
 n = 500
-x = rand(n)
+x = 2rand(n)
 y = rand(n)
-z = [(x[i]<=0.5)&(y[i]<=0.5) ? rand() : rand().+1.2 for i in eachindex(x)]
+z = [(x[i] <= 0.5) & (y[i] <= 0.5) ? rand() : rand() .+ 1.2 for i in eachindex(x)]
 
-scatter(x, y, marker_z = z, lab="")
+scatter(x, y; color = z)
 
 # Womble
 
@@ -22,20 +19,18 @@ W = wombling(x, y, z)
 
 # Get the rate of change
 
-scatter(x, y, c=:lightgrey, msw=0.0, lab="", m=:square, ms=3)
-scatter!(W.x, W.y, marker_z = log1p.(W.m), lab="")
+scatter(x, y; color = :lightgrey)
+scatter!(W.x, W.y; color = log1p.(W.m))
+current_figure()
 
 # Angle histogram
 
-stephist(
-    deg2rad.(sort(vec(W.θ)));
-    proj=:polar,
-    lab="",
-    c=:teal,
-    fill=(0, 0.2, :teal),
-    nbins=100,
-)
+f = Figure()
+ax = PolarAxis(f[1, 1])
+h = fit(Histogram, deg2rad.(values(W.θ)); nbins = 100)
+stairs!(ax, h.edges[1], h.weights[[axes(h.weights, 1)..., 1]]; color = :teal, linewidth = 2)
+current_figure()
 
 # Show the rotation with a color
 
-scatter(W.x, W.y, marker_z = W.θ, c=:vik, clim=(0, 360))
+scatter(W.x, W.y; color = W.θ, colormap = :vikO, colorrange = (0, 360))
