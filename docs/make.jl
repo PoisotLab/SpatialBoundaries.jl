@@ -30,7 +30,6 @@ makedocs(;
 
 @info "Prepare to deploy"
 deploydocs(;
-    deps = Deps.pip("pygments", "python-markdown-math"),
     repo = "github.com/PoisotLab/SpatialBoundaries.jl.git",
     push_preview = true,
     devbranch = "main",
