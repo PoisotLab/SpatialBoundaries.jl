@@ -37,4 +37,5 @@ deploydocs(;
     repo = "github.com/PoisotLab/SpatialBoundaries.jl.git",
     push_preview = true,
     devbranch = "main",
+    warnonly = true,
 )
