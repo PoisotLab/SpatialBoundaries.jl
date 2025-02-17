@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: [1.8.0]
+        julia-version: ["lts"]
         julia-arch: [x86]
         os: [ubuntu-latest]
     steps:
