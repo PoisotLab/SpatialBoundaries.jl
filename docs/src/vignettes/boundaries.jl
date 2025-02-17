@@ -6,8 +6,7 @@
 # three-patch landscape.
 
 using SpatialBoundaries
-using StatsPlots
-default(; dpi=500, size=(600, 600), aspectratio=1, c=:batlow, frame=:box)
+using CairoMakie
 
 # Let's create a landscape with two values:
 
@@ -26,7 +25,7 @@ W = wombling(A);
 
 # Let's look at the rate of change:
 
-heatmap(W.m; c=:nuuk)
+heatmap(W.m; colormap = :Greys)
 
 # Picking the boundaries is done by passing the wombling output to the
 # `boundaries` function, with a specific threshold giving the proportion of
@@ -36,9 +35,11 @@ heatmap(W.m; c=:nuuk)
 thresholds = LinRange(0.0, 0.2, 200)
 patches = [length(boundaries(W, t)) for t in thresholds]
 
-plot(thresholds, log1p.(patches), aspectratio=:none)
-xaxis!("Threshold", (0., 0.2))
-yaxis!("log(boundary patches + 1)", (0., 9.))
+f, ax, plt = lines(thresholds, log1p.(patches), color=:black, linewidth=2)
+tightlimits!(ax)
+ax.xlabel = "Threshold"
+ax.ylabel = "log(boundary patches + 1)"
+f
 
 # Let's eyeball this as 0.01, and see how the patches are distributed.
 
@@ -49,11 +50,11 @@ yaxis!("log(boundary patches + 1)", (0., 9.))
 
 b = similar(W.m)
 
-for t in reverse(LinRange(0.0, 1.0, 200))
+for t in reverse(LinRange(0.0, 1.0, 300))
     b[boundaries(W, t)] .= t
 end
 
-heatmap(b, c=:tofino, clim=(0,1))
+heatmap(b, colormap=:tofino, colorrange=(0,1))
 
 # This also suggests that we will get well delineated patches for low values of
 # the threshold.
@@ -63,7 +64,8 @@ B = boundaries(W, 0.01);
 # In the following figure, cells identified as candidate boundaries are marked
 # in white:
 
-heatmap(A)
-scatter!([(reverse(x.I)) for x in B], leg=false, msw=0, c=:white)
+f, ax, hm = heatmap(A)
+scatter!(ax, [b.I for b in B], color=:white)
+f
 
 # We can see that the boundaries of the patches have been well identified!

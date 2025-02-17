@@ -22,6 +22,7 @@
 using SpatialBoundaries
 using SpeciesDistributionToolkit
 using CairoMakie
+using StatsBase
 
 # First we can start by defining the extent of the Southwestern islands of
 # Hawaii, which can be used to restrict the extraction of the various landcover
@@ -101,31 +102,28 @@ current_figure()
 # For the candidate boundary cells we can simply mask `direction` with `b` as we
 # did for the rate of change.
 
-direction_all = mask(replace(rate, 0 => nothing), direction)
+direction_all = mask(nodata(direction, 0), direction)
 
-direction_candidate = mask(b, direction)
+direction_candidate = mask(direction_all, direction)
 
 # Because stephist() requires a vector of radians for plotting we must first
 # collect the cells and convert them from degrees to radians. Then we can start
 # by plotting the direction of change of *all* cells.
 
 f = Figure()
-ax = PolarAxis(f[1,1])
-h = fit(Histogram, values(direction); nbins=50)
-stairs!(ax, h.edges[1], h.weights[[axes(h.weights,1)...,1]])
+ax = PolarAxis(f[1, 1])
+h = fit(Histogram, values(direction); nbins = 100)
+stairs!(ax, h.edges[1], h.weights[[axes(h.weights, 1)..., 1]]; color = :teal, linewidth = 2)
 current_figure()
 
 # Followed by plotting the direction of change only for cells that are
 # considered as candidate boundary cells.
 
-Plots.stephist(
-        deg2rad.(values(direction_candidate));
-        proj=:polar,
-        lab="",
-        c=:red,
-        nbins = 36,
-        yshowaxis=false,
-        normalize = false)
+f = Figure()
+ax = PolarAxis(f[1, 1])
+h = fit(Histogram, values(direction_candidate); nbins = 100)
+stairs!(ax, h.edges[1], h.weights[[axes(h.weights, 1)..., 1]]; color = :orange, linewidth = 2)
+current_figure()
 
 # End
 
