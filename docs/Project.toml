@@ -3,8 +3,4 @@ CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 NeutralLandscapes = "71847384-8354-4223-ac08-659a5128069f"
-SpeciesDistributionToolkit = "72b53823-5c0b-4575-ad0e-8e97227ad13b"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-
-[compat]
-SpeciesDistributionToolkit = "1"

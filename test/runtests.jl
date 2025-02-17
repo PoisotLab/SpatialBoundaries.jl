@@ -7,7 +7,6 @@ tests = [
     "Triangulation wombling" => "03_delaunay.jl",
     "Direction of change" => "04_direction.jl",
     "Overall mean wombling" => "05_mean.jl",
-    "REQUIRE: SimpleSDMLayers" => "R1_simplesdmlayers.jl",
 ]
 
 for test in tests
