@@ -15,6 +15,7 @@ makedocs(;
     sitename = "SpatialBoundaries",
     format = Documenter.HTML(),
     modules = [SpatialBoundaries],
+    warnonly = true,
     pages = [
         "Home" => [
             "Introduction" => "vignettes/introduction.md",
@@ -27,15 +28,10 @@ makedocs(;
     ],
 )
 
-@info "Prepare to remove"
-run(`find . -type f -name ".tif" -delete`)
-run(`find . -type f -name ".tif"`)
-
 @info "Prepare to deploy"
 deploydocs(;
     deps = Deps.pip("pygments", "python-markdown-math"),
     repo = "github.com/PoisotLab/SpatialBoundaries.jl.git",
     push_preview = true,
     devbranch = "main",
-    warnonly = true,
 )
