@@ -7,10 +7,10 @@ using Test
 precipitation = SDMLayer(
     RasterData(CHELSA1, BioClim);
     layer = 12,
-    left = -80.0,
-    right = -56.0,
-    bottom = 44.0,
-    top = 62.0,
+    left = -66.0,
+    right = -62.0,
+    bottom = 45.0,
+    top = 46.5,
 )
 
 W = wombling(precipitation)
