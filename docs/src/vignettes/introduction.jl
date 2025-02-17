@@ -72,7 +72,7 @@ W = wombling(landscape);
 
 # Let's have a look at the rate of change:
 
-heatmap(W.m, colormap=:navia, clim=(0, maximum(W.m)))
+heatmap(W.m, colormap=:navia, colorrange=(0, maximum(W.m)))
 
 # The rate of change informs us on the potential for there to be a boundary
 # (zone of change) within a window. Cells with a high rate of change are
@@ -83,7 +83,7 @@ heatmap(W.m, colormap=:navia, clim=(0, maximum(W.m)))
 # for instance, an angle of 180° means that the value is smaller in the South,
 # and larger in the North:
 
-heatmap(W.θ, colormap=:romaO, clim=(0., 360.))
+heatmap(W.θ, colormap=:romaO, colorrange=(0., 360.))
 
 # The direction of change is *not* the direction the boundary would be if you
 # were to draw it on the landscape but rather the direction the rate of change

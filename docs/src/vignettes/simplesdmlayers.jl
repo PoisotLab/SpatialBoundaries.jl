@@ -124,7 +124,3 @@ ax = PolarAxis(f[1, 1])
 h = fit(Histogram, values(direction_candidate); nbins = 100)
 stairs!(ax, h.edges[1], h.weights[[axes(h.weights, 1)..., 1]]; color = :orange, linewidth = 2)
 current_figure()
-
-# End
-
-rm(joinpath(SimpleSDMLayers._layers_assets_path, "EarthEnv"); force=true, recursive=true) #hide
