@@ -1,7 +1,7 @@
 name = "SpatialBoundaries"
 uuid = "8d2ba62a-3d23-4a2b-b692-6b63e9267be2"
 authors = ["Tanya Strydom <tanya.strydom@umontreal.ca>", "Timothée Poisot <timothee.poisot@umontreal.ca>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -10,6 +10,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 VoronoiDelaunay = "72f80fcb-8c52-57d9-aff0-40c1a3526986"
 
 [compat]
+Statistics = "1"
 StatsBase = "0.34"
 VoronoiDelaunay = "0.4"
 julia = "1.9"
