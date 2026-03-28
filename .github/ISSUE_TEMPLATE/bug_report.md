@@ -13,7 +13,7 @@ A clear and concise description of what the bug is.
 A [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) that is enough to show what the problem is
 
 ~~~ julia
-using SimpleSDMLayers
+using SpatialBoundaries
 
 # Add your code here
 ~~~

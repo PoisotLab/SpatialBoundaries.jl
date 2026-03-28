@@ -15,7 +15,7 @@ A clear and concise description of what you want to happen.
 Ideally, this can take the form of code you would like to write:
 
 ~~~ julia
-using SimpleSDMLayers
+using SpatialBoundaries
 
 # Write your dream code here
 ~~~
