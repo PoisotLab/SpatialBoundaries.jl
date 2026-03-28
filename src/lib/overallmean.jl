@@ -18,10 +18,10 @@ function Statistics.mean(w::Vector{T}) where {T <: Womble}
         di = filter(!isnan, [deg2rad(womble.θ[_idx]) for womble in w])
         if !isempty(ch)
             m[_idx] = mean(ch)
-            α[_idx] = atan(mean(sin.(di)), mean(cos.(di)))
+            α[_idx] = atan(sum(sin.(di)), sum(cos.(di)))
         end
     end
-    average_direction = rad2deg.(α) .+ 180.0
+    average_direction = rad2deg.(α .- π)
     if w[1] isa LatticeWomble
         return LatticeWomble(m, average_direction, w[1].x, w[1].y)
     end
